@@ -1,22 +1,24 @@
 package com.nightingale.simplelearning.model;
 import com.nightingale.simplelearning.model.enums.Role;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Objects;
 
 public class User {
 
     @Positive
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String login;
 
+    @NotEmpty
     private String password;
 
+    @NotEmpty
     private Role role;
 
     public long getUserId() {

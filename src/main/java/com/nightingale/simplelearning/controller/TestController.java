@@ -1,33 +1,59 @@
 package com.nightingale.simplelearning.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nightingale.simplelearning.model.Test;
+import com.nightingale.simplelearning.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.math.BigInteger;
+import java.util.List;
+
+//TODO: THIS WILL NEED A REQUESTTEST WITH STUDENT'S ANSWERS
+//      AS WELL AS A CHECK TO SEE IF THEY ARE RIGHT AND
+//      GENERATE A RESULT
 @RestController
+@RequestMapping(value = "/api/test")
 public class TestController {
 
-    @RequestMapping("/api/hellouser")
-    public String getUser()
-    {
-        return "Hello User";
+    @Autowired
+    private TestService testService;
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/by_course/{course_id}")
+    public ResponseEntity<?> addTest(@Valid @RequestBody Test test, @PathVariable("course_id") BigInteger id) {
+        testService.save(test, id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @RequestMapping("/api/hellostudent")
-    public String getStudent()
-    {
-        return "Hello Student";
+    @GetMapping
+    public List<Test> getAllTests() {
+        return testService.getAllTests();
     }
 
-    @RequestMapping("/api/helloteacher")
-    public String getTeacher()
-    {
-        return "Hello Teacher";
+    @GetMapping("/{test_id}")
+    public Test getTest(@PathVariable("test_id") BigInteger id) {
+        return testService.getTestById(id);
     }
 
-    @RequestMapping("/api/helloadmin")
-    public String getAdmin()
-    {
-        return "Hello Admin";
+    @PreAuthorize("hasRole('TEACHER')")
+    @PutMapping("/{test_id}")
+    public ResponseEntity<?> updateTest(@Valid @RequestBody Test test, @PathVariable("test_id") BigInteger id) {
+        testService.update(id, test);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('TEACHER')")
+    @DeleteMapping("/{test_id}")
+    public boolean deleteTest(@PathVariable("test_id") BigInteger id) {
+        return testService.delete(id);
+    }
+
+    @GetMapping("/by_course/{course_id}")
+    public List<Test> getTestsByCourseId(@PathVariable("course_id") BigInteger id) {
+        return testService.getAllTestsByCourseId(id);
+    }
 }

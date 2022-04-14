@@ -99,13 +99,20 @@ public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // public endpoints
                 .antMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/register").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/hellouser").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/hellostudent").hasRole("STUDENT")
                 .antMatchers(HttpMethod.GET, "/api/helloteacher").hasRole("TEACHER")
                 .antMatchers(HttpMethod.GET, "/api/helloadmin").hasRole("ADMIN")
-                .antMatchers("/api/**").authenticated();
-                //                .antMatchers("/**").permitAll();
+                //.antMatchers(HttpMethod.GET, "api/material/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.POST, "api/material/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.PUT, "api/material/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.DELETE, "api/material/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.POST, "api/page/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.PUT, "api/page/**").hasRole("TEACHER")
+                //.antMatchers(HttpMethod.DELETE, "api/page/**").hasRole("TEACHER")
+                //.antMatchers("/api/**").authenticated();
+                               .antMatchers("/**").permitAll();
 
 
         http.addFilterBefore(
