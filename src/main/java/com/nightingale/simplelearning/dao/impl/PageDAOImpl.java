@@ -1,10 +1,7 @@
 package com.nightingale.simplelearning.dao.impl;
 
-import com.nightingale.simplelearning.dao.LectureDAO;
 import com.nightingale.simplelearning.dao.PageDAO;
-import com.nightingale.simplelearning.dao.mapper.LectureRowMapper;
 import com.nightingale.simplelearning.dao.mapper.PageRowMapper;
-import com.nightingale.simplelearning.model.Lecture;
 import com.nightingale.simplelearning.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,12 +23,6 @@ public class PageDAOImpl implements PageDAO {
 
     @Autowired
     private PageRowMapper pageRowMapper;
-
-    @Autowired
-    private LectureRowMapper lectureRowMapper;
-
-    @Autowired
-    private LectureDAO lectureDAO;
 
     private static final Logger LOGGER = Logger.getLogger(PageDAOImpl.class.getName());
 
@@ -68,14 +59,8 @@ public class PageDAOImpl implements PageDAO {
     @Override
     public boolean deleteAllPagesByLectureId(BigInteger id) {
         try {
-            Lecture lecture= jdbcTemplate.queryForObject(lectureDAO.SELECT_LECTURE_BY_ID, lectureRowMapper, id);
-            if (lecture!=null) {
-                jdbcTemplate.update(DELETE_PAGES_BY_LECTURE_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Lecture with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_PAGES_BY_LECTURE_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

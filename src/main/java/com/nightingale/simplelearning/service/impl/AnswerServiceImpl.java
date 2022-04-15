@@ -12,13 +12,8 @@ import java.util.List;
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
-    private AnswerDAO answerDAO;
-
     @Autowired
-    public void setAnswerDAO(AnswerDAO answerDAO) {
-        this.answerDAO = answerDAO;
-    }
-
+    private AnswerDAO answerDAO;
 
     @Override
     public Answer getAnswerById(BigInteger id) {

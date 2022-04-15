@@ -39,7 +39,7 @@ public interface AppealDAO {
 
     String DELETE_APPEAL_BY_ID = "DELETE FROM appeal WHERE appealId = ?;";
 
-    String DELETE_All_APPEALS_BY_COURSE_ID = "DELETE FROM appeal WHERE courselId = ?;";
+    String DELETE_All_APPEALS_BY_COURSE_ID = "DELETE FROM appeal WHERE courseId = ?;";
 
     String UPDATE_APPEAL_BY_ID = "UPDATE appeal " +
             "SET text = ?, status = ?, reasonForDenial = ? " +

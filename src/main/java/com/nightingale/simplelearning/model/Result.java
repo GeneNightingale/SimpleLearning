@@ -11,9 +11,9 @@ public class Result {
 
     private BigDecimal score;
 
-    private User student;
+    private long studentId;
 
-    private Test test;
+    private long testId;
 
     public long getResultId() {
         return resultId;
@@ -31,20 +31,20 @@ public class Result {
         this.score = score;
     }
 
-    public User getStudent() {
-        return student;
+    public long getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(User student) {
-        this.student = student;
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
     }
 
-    public Test getTest() {
-        return test;
+    public long getTestId() {
+        return testId;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestId(long testId) {
+        this.testId = testId;
     }
 
     @Override
@@ -55,13 +55,13 @@ public class Result {
         Result result = (Result) o;
         return Objects.equals(getResultId(), result.getResultId()) &&
                 Objects.equals(getScore(), result.getScore()) &&
-                Objects.equals(getStudent(), result.getStudent()) &&
-                Objects.equals(getTest(), result.getTest());
+                Objects.equals(getStudentId(), result.getStudentId()) &&
+                Objects.equals(getTestId(), result.getTestId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getResultId(), getScore(), getStudent(), getTest());
+        return Objects.hash(getResultId(), getScore(), getStudentId(), getTestId());
     }
 }
 

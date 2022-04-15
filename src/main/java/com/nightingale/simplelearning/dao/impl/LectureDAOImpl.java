@@ -1,11 +1,8 @@
 package com.nightingale.simplelearning.dao.impl;
 
-import com.nightingale.simplelearning.dao.CourseDAO;
 import com.nightingale.simplelearning.dao.LectureDAO;
 import com.nightingale.simplelearning.dao.PageDAO;
-import com.nightingale.simplelearning.dao.mapper.CourseListRowMapper;
 import com.nightingale.simplelearning.dao.mapper.LectureRowMapper;
-import com.nightingale.simplelearning.model.Course;
 import com.nightingale.simplelearning.model.Lecture;
 import com.nightingale.simplelearning.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +29,16 @@ public class LectureDAOImpl implements LectureDAO {
     @Autowired
     private LectureRowMapper lectureRowMapper;
 
-    @Autowired
-    private CourseDAO courseDAO;
-
-    @Autowired
-    private CourseListRowMapper courseListRowMapper;
-
     private static final Logger LOGGER = Logger.getLogger(LectureDAOImpl.class.getName());
 
     @Override
     public Lecture getLectureById(BigInteger id) {
         try {
             Lecture lecture = jdbcTemplate.queryForObject(SELECT_LECTURE_BY_ID, lectureRowMapper, id);
-            List<Page> pages = pageDAO.getAllPagesByLectureId(id);
-            lecture.setPages(pages);
+            if (lecture != null) {
+                List<Page> pages = pageDAO.getAllPagesByLectureId(id);
+                lecture.setPages(pages);
+            }
             return lecture;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -77,14 +70,8 @@ public class LectureDAOImpl implements LectureDAO {
     @Transactional(rollbackFor = {DataAccessException.class})
     public boolean deleteAllLecturesByCourseId(BigInteger id) {
         try {
-            Course course = jdbcTemplate.queryForObject(courseDAO.SELECT_COURSE_BY_ID, courseListRowMapper, id);
-            if (course!=null) {
-                jdbcTemplate.update(DELETE_ALL_LECTURES_BY_COURSE_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Course with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_ALL_LECTURES_BY_COURSE_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -113,12 +100,16 @@ public class LectureDAOImpl implements LectureDAO {
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean delete(BigInteger id) {
         try {
-            //TRY TO DELETE LECTURE'S PAGES FIRST
-            boolean pageDeletionSuccessfulResult = pageDAO.deleteAllPagesByLectureId(id);
-            //IF THAT'S DONE, TRY TO DELETE LECTURE ITSELF
-            if (pageDeletionSuccessfulResult) {
-                jdbcTemplate.update(DELETE_LECTURE_BY_ID, id);
-                return true;
+            Lecture lecture = getLectureById(id);
+            if (lecture != null) {
+                //TRY TO DELETE LECTURE'S PAGES FIRST
+                boolean pageDeletionSuccessfulResult = pageDAO.deleteAllPagesByLectureId(id);
+                //IF THAT'S DONE, TRY TO DELETE LECTURE ITSELF
+                if (pageDeletionSuccessfulResult) {
+                    jdbcTemplate.update(DELETE_LECTURE_BY_ID, id);
+                    return true;
+                } else
+                    return false;
             } else
                 return false;
         } catch (DataAccessException dataAccessException) {
@@ -136,10 +127,9 @@ public class LectureDAOImpl implements LectureDAO {
             return false;
         }
         try {
-            Lecture lecture = jdbcTemplate.queryForObject(SELECT_LECTURE_BY_ID, lectureRowMapper, id);
+            Lecture lecture = getLectureById(id);
             if (lecture!=null) {
                 jdbcTemplate.update(UPDATE_LECTURE_BY_ID, newLecture.getTitle(), id);
-                //NO NEED TO UPDATE PAGE IDS ANYMORE
                 return true;
             } else {
                 LOGGER.log(Level.WARNING, "No Lecture with given ID");

@@ -46,6 +46,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User getUserByResultId(BigInteger id) {
+        try {
+            return jdbcTemplate.queryForObject(GET_USER_BY_RESULT_ID, userRowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
     public boolean save(String name, String login, String password, Role role) {
         try {
             int result = jdbcTemplate.update(INSERT_USER, name, login, password, getNumFromRole(role));

@@ -12,12 +12,8 @@ import java.util.List;
 @Service
 public class PageServiceImpl implements PageService {
 
-    private PageDAO pageDAO;
-
     @Autowired
-    public void setPageDAO(PageDAO pageDAO) {
-        this.pageDAO = pageDAO;
-    }
+    private PageDAO pageDAO;
 
     @Override
     public Page getPageById(BigInteger id) {

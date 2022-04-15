@@ -2,9 +2,7 @@ package com.nightingale.simplelearning.dao.impl;
 
 import com.nightingale.simplelearning.dao.AnswerDAO;
 import com.nightingale.simplelearning.dao.QuestionDAO;
-import com.nightingale.simplelearning.dao.TestDAO;
 import com.nightingale.simplelearning.dao.mapper.QuestionRowMapper;
-import com.nightingale.simplelearning.dao.mapper.TestRowMapper;
 import com.nightingale.simplelearning.model.Answer;
 import com.nightingale.simplelearning.model.Question;
 import com.nightingale.simplelearning.model.Test;
@@ -28,12 +26,6 @@ public class QuestionDAOImpl implements QuestionDAO {
 
     @Autowired
     private AnswerDAO answerDAO;
-
-    @Autowired
-    private TestDAO testDAO;
-
-    @Autowired
-    private TestRowMapper testRowMapper;
 
     @Autowired
     private QuestionRowMapper questionRowMapper;
@@ -76,16 +68,8 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public boolean deleteAllQuestionsByTestId(BigInteger id) {
         try {
-            //Check if this test exists at all
-            Test test = jdbcTemplate.queryForObject(testDAO.SELECT_TEST_BY_ID, testRowMapper, id);
-            //If it exists, delete its questions
-            if (test!=null) {
-                jdbcTemplate.update(DELETE_QUESTIONS_BY_TEST_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Test with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_QUESTIONS_BY_TEST_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -114,12 +98,18 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean delete(BigInteger id) {
         try {
-            //TRY TO DELETE QUESTION'S ANSWERS FIRST
-            boolean answerDeletionSuccessfulResult = answerDAO.deleteAllAnswersByQuestionId(id);
-            //IF THAT'S DONE, TRY TO DELETE QUESTION ITSELF
-            if (answerDeletionSuccessfulResult) {
-                jdbcTemplate.update(DELETE_QUESTION_BY_ID, id);
-                return true;
+            //Check if this question exists at all
+            //If it exists, delete its answers
+            Question question = getQuestionById(id);
+            if (question!=null) {
+                //TRY TO DELETE QUESTION'S ANSWERS FIRST
+                boolean answerDeletionSuccessfulResult = answerDAO.deleteAllAnswersByQuestionId(id);
+                //IF THAT'S DONE, TRY TO DELETE QUESTION ITSELF
+                if (answerDeletionSuccessfulResult) {
+                    jdbcTemplate.update(DELETE_QUESTION_BY_ID, id);
+                    return true;
+                } else
+                    return false;
             } else
                 return false;
         } catch (DataAccessException dataAccessException) {

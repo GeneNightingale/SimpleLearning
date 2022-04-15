@@ -12,12 +12,8 @@ import java.util.List;
 @Service
 public class LectureServiceImpl implements LectureService {
 
-    private LectureDAO lectureDAO;
-
     @Autowired
-    public void setLectureDAO(LectureDAO lectureDAO) {
-        this.lectureDAO = lectureDAO;
-    }
+    private LectureDAO lectureDAO;
 
     @Override
     public Lecture getLectureById(BigInteger id) {

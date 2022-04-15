@@ -12,12 +12,8 @@ import java.util.List;
 @Service
 public class MaterialServiceImpl implements MaterialService {
 
-    private MaterialDAO materialDAO;
-
     @Autowired
-    public void setMaterialDAO(MaterialDAO materialDAO) {
-        this.materialDAO = materialDAO;
-    }
+    private MaterialDAO materialDAO;
 
     @Override
     public Material getMaterialById(BigInteger id) {

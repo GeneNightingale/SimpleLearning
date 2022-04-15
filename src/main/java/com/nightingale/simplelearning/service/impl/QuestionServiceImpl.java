@@ -12,12 +12,8 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
-    private QuestionDAO questionDAO;
-
     @Autowired
-    public void setQuestionDAO(QuestionDAO questionDAO) {
-        this.questionDAO = questionDAO;
-    }
+    private QuestionDAO questionDAO;
 
     @Override
     public Question getQuestionById(BigInteger id) {

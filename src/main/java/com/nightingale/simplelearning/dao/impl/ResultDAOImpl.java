@@ -1,8 +1,10 @@
 package com.nightingale.simplelearning.dao.impl;
 
-import com.nightingale.simplelearning.dao.AppealDAO;
-import com.nightingale.simplelearning.dao.mapper.AppealRowMapper;
-import com.nightingale.simplelearning.model.Appeal;
+import com.nightingale.simplelearning.dao.*;
+import com.nightingale.simplelearning.dao.mapper.ResultRowMapper;
+import com.nightingale.simplelearning.dao.mapper.TestRowMapper;
+import com.nightingale.simplelearning.dao.mapper.UserRowMapper;
+import com.nightingale.simplelearning.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,26 +18,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Repository
-public class AppealDAOImpl implements AppealDAO {
+public class ResultDAOImpl implements ResultDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private AppealRowMapper appealRowMapper;
-/*
-    @Autowired
-    private CourseDAO courseDAO;
+    private ResultRowMapper resultRowMapper;
 
     @Autowired
-    private CourseListRowMapper courseListRowMapper;*/
+    private TestRowMapper testRowMapper;
 
-    private static final Logger LOGGER = Logger.getLogger(AppealDAOImpl.class.getName());
+    @Autowired
+    private UserRowMapper userRowMapper;
+
+    private static final Logger LOGGER = Logger.getLogger(ResultDAOImpl.class.getName());
 
     @Override
-    public Appeal getAppealById(BigInteger id) {
+    public Result getResultById(BigInteger id) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_APPEAL_BY_ID, appealRowMapper, id);
+            return jdbcTemplate.queryForObject(SELECT_RESULT_BY_ID, resultRowMapper, id);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;
@@ -43,9 +45,9 @@ public class AppealDAOImpl implements AppealDAO {
     }
 
     @Override
-    public List<Appeal> getAllAppeals() {
+    public List<Result> getAllResultsByTestId(BigInteger testId) {
         try {
-            return jdbcTemplate.query(SELECT_ALL_APPEALS, appealRowMapper);
+            return jdbcTemplate.query(SELECT_RESULTS_BY_TEST_ID, resultRowMapper, testId);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;
@@ -53,9 +55,9 @@ public class AppealDAOImpl implements AppealDAO {
     }
 
     @Override
-    public List<Appeal> getAllAppealsByTeacher(BigInteger id) {
+    public List<Result> getAllResultsByStudentId(BigInteger studentId) {
         try {
-            return jdbcTemplate.query(SELECT_ALL_APPEALS_BY_TEACHER, appealRowMapper, id);
+            return jdbcTemplate.query(SELECT_RESULTS_BY_STUDENT_ID, resultRowMapper, studentId);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;
@@ -63,9 +65,9 @@ public class AppealDAOImpl implements AppealDAO {
     }
 
     @Override
-    public List<Appeal> getAllAppealsByStudent(BigInteger id) {
+    public List<Result> getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
         try {
-            return jdbcTemplate.query(SELECT_ALL_APPEALS_BY_STUDENT, appealRowMapper, id);
+            return jdbcTemplate.query(SELECT_RESULTS_BY_STUDENT_AND_TEST_ID, resultRowMapper, studentId, testId);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;
@@ -73,9 +75,9 @@ public class AppealDAOImpl implements AppealDAO {
     }
 
     @Override
-    public List<Appeal> getAllAppealsByCourseId(BigInteger courseId) {
+    public List<Result> getAllResults() {
         try {
-            return jdbcTemplate.query(SELECT_APPEALS_BY_COURSE_ID, appealRowMapper, courseId);
+            return jdbcTemplate.query(SELECT_ALL_RESULTS, resultRowMapper);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;
@@ -84,54 +86,9 @@ public class AppealDAOImpl implements AppealDAO {
 
     @Override
     @Transactional(rollbackFor = DataAccessException.class)
-    public boolean approveAppealById(BigInteger id) {
+    public boolean deleteAllResultsByTestId(BigInteger id) {
         try {
-            Appeal appeal = getAppealById(id);
-            if (appeal!=null) {
-                jdbcTemplate.update(APPROVE_APPEAL_BY_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No appeal with given ID");
-                return false;
-            }
-        } catch (DataAccessException dataAccessException) {
-            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return false;
-        }
-    }
-
-    @Override
-    @Transactional(rollbackFor = DataAccessException.class)
-    public boolean denyAppealById(BigInteger id) {
-        try {
-            Appeal appeal = getAppealById(id);
-            if (appeal!=null) {
-                jdbcTemplate.update(DENY_APPEAL_BY_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No appeal with given ID");
-                return false;
-            }
-        } catch (DataAccessException dataAccessException) {
-            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return false;
-        }
-    }
-
-    @Override
-    @Transactional(rollbackFor = DataAccessException.class)
-    public boolean deleteClosedAppealsByTeacher(BigInteger id) {
-        jdbcTemplate.update(DELETE_CLOSED_APPEALS_BY_TEACHER, id);
-        return true;
-    }
-
-    @Override
-    @Transactional(rollbackFor = DataAccessException.class)
-    public boolean deleteAllAppealsByCourseId(BigInteger courseId) {
-        try {
-            jdbcTemplate.update(DELETE_All_APPEALS_BY_COURSE_ID, courseId);
+            jdbcTemplate.update(DELETE_RESULTS_BY_TEST_ID, id);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -140,11 +97,40 @@ public class AppealDAOImpl implements AppealDAO {
         }
     }
 
-    @Override
-    public boolean save(Appeal appeal, BigInteger courseId) {
+    /*@Override
+    @Transactional(rollbackFor = DataAccessException.class)
+    public boolean deleteAllResultsByStudentId(BigInteger id) {
         try {
-            jdbcTemplate.update(INSERT_APPEAL, courseId, appeal.getUser().getUserId(), appeal.getText());
-            return true;
+            //Check if this student exists at all
+            User student = userDAO.getUserById(id);
+            //If they exist, delete their results
+            if (student!=null) {
+                jdbcTemplate.update(DELETE_RESULTS_BY_USER_ID, id);
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "No User with given ID");
+                return false;
+            }
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }*/
+
+    @Override
+    @Transactional(rollbackFor = {DataAccessException.class})
+    public boolean save(Result result) {
+        try {
+            BigInteger studentId = BigInteger.valueOf(result.getStudentId());
+            BigInteger testId = BigInteger.valueOf(result.getTestId());
+            if(isInvalidResult(result, studentId, testId)){
+                LOGGER.log(Level.WARNING, "Incorrect Student or Test ID");
+                return false;
+            } else {
+                jdbcTemplate.update(INSERT_RESULT, result.getScore(), testId, studentId);
+                return true;
+            }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -156,14 +142,8 @@ public class AppealDAOImpl implements AppealDAO {
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean delete(BigInteger id) {
         try {
-            Appeal appeal = getAppealById(id);
-            if (appeal!=null) {
-                jdbcTemplate.update(DELETE_APPEAL_BY_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Appeal with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_RESULT_BY_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -173,15 +153,16 @@ public class AppealDAOImpl implements AppealDAO {
 
     @Override
     @Transactional(rollbackFor = DataAccessException.class)
-    public boolean update(BigInteger id, Appeal newAppeal) {
+    public boolean update(BigInteger id, Result newResult) {
         try {
-            Appeal appeal = getAppealById(id);
-            if (appeal!=null) {
-                jdbcTemplate.update(UPDATE_APPEAL_BY_ID, appeal.getText(), appeal.getStatus(), appeal.getReasonForDenial(), id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Appeal with given ID");
+            BigInteger studentId = BigInteger.valueOf(newResult.getStudentId());
+            BigInteger testId = BigInteger.valueOf(newResult.getTestId());
+            if(isInvalidResult(newResult, studentId, testId)){
+                LOGGER.log(Level.WARNING, "Incorrect Student or Test ID");
                 return false;
+            } else {
+                jdbcTemplate.update(UPDATE_RESULT_BY_ID, newResult.getScore(), testId, studentId, id);
+                return true;
             }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -190,4 +171,16 @@ public class AppealDAOImpl implements AppealDAO {
         }
     }
 
+    private boolean isInvalidResult(Result result, BigInteger studentId, BigInteger testId) {
+        if (result == null)
+            return true;
+        else {
+            User student = jdbcTemplate.queryForObject(GET_USER_BY_ID, userRowMapper, studentId);
+            Test test = jdbcTemplate.queryForObject(SELECT_TEST_BY_ID, testRowMapper, testId);//testDAO.getTestById(testId);
+            return student == null || test == null;
+        }
+    }
+
 }
+
+

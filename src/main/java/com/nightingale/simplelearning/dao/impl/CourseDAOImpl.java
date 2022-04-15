@@ -59,7 +59,7 @@ public class CourseDAOImpl implements CourseDAO{
                 course.setTests(tests);
                 List<User> students = getAllStudentsByCourseId(id);
                 course.setStudents(students);
-                //course.setTeacher(userDAO.getUserById());
+                course.setTeacher(getTeacherByCourseId(id));
                 //TODO: ADD APPEALS (?)
                 //List<Appeal> appeals = testDAO.getAllAppealsByCourseId(id);
                 //                course.setAppeals(appeals);
@@ -86,6 +86,7 @@ public class CourseDAOImpl implements CourseDAO{
                 course.setTests(tests);
                 List<User> students = getAllStudentsByCourseId(id);
                 course.setStudents(students);
+                course.setTeacher(getTeacherByCourseId(id));
                 //TODO: ADD APPEALS (?)
                 //List<Appeal> appeals = testDAO.getAllAppealsByCourseId(id);
                 //                course.setAppeals(appeals);
@@ -146,6 +147,23 @@ public class CourseDAOImpl implements CourseDAO{
     }
 
     @Override
+    public User getTeacherByCourseId(BigInteger id) {
+        try {
+            Course course = jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID, courseListRowMapper, id);
+            if (course!=null) {
+                return jdbcTemplate.queryForObject(SELECT_TEACHER_BY_COURSE_ID, userRowMapper, id);
+            } else {
+                LOGGER.log(Level.WARNING, "No Course with given ID");
+                return null;
+            }
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return null;
+        }
+    }
+
+    @Override
     @Transactional
     public boolean save(Course course) {
         try {
@@ -162,19 +180,25 @@ public class CourseDAOImpl implements CourseDAO{
     @Transactional
     public boolean delete(BigInteger id) {
         try {
-            //TRY TO DELETE MATERIALS, LECTURES, TESTS AND MAYBE APPEALS FIRST
-            boolean materialDeletionSuccessfulResult = materialDAO.deleteAllMaterialsByCourseId(id);
-            boolean lectureDeletionSuccessfulResult = lectureDAO.deleteAllLecturesByCourseId(id);
-            boolean testDeletionSuccessfulResult = testDAO.deleteAllTestsByCourseId(id);
-            boolean appealDeletionSuccessfulResult = appealDAO.deleteAllAppealsByCourseId(id);
+            Course course = getCourseById(id);
+            if (course != null) {
+                //TRY TO DELETE MATERIALS, LECTURES, TESTS AND MAYBE APPEALS FIRST
+                boolean materialDeletionSuccessfulResult = materialDAO.deleteAllMaterialsByCourseId(id);
+                boolean lectureDeletionSuccessfulResult = lectureDAO.deleteAllLecturesByCourseId(id);
+                boolean testDeletionSuccessfulResult = testDAO.deleteAllTestsByCourseId(id);
+                boolean appealDeletionSuccessfulResult = appealDAO.deleteAllAppealsByCourseId(id);
 
-            //IF THAT'S DONE, TRY TO DELETE Course ITSELF
-            if (materialDeletionSuccessfulResult && lectureDeletionSuccessfulResult &&
-                testDeletionSuccessfulResult && appealDeletionSuccessfulResult) {
-                jdbcTemplate.update(DELETE_COURSE_BY_ID, id);
-                return true;
-            } else
+                //IF THAT'S DONE, TRY TO DELETE Course ITSELF
+                if (materialDeletionSuccessfulResult && lectureDeletionSuccessfulResult &&
+                        testDeletionSuccessfulResult && appealDeletionSuccessfulResult) {
+                    jdbcTemplate.update(DELETE_COURSE_BY_ID, id);
+                    return true;
+                } else
+                    return false;
+            } else {
+                LOGGER.log(Level.WARNING, "No Course with given ID");
                 return false;
+            }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -186,7 +210,7 @@ public class CourseDAOImpl implements CourseDAO{
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean update(BigInteger id, Course newCourse) {
         try {
-            Course course = jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID, courseListRowMapper, id);
+            Course course = getCourseById(id);
             if (course!=null) {
                 jdbcTemplate.update(UPDATE_COURSE_BY_ID, newCourse.getTitle(), newCourse.getDescription(), id);
                 return true;

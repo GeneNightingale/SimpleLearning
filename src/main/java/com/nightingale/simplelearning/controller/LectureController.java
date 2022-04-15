@@ -50,7 +50,7 @@ public class LectureController {
     }
 
     @GetMapping("/by_course/{course_id}")
-    public List<Lecture> geLecturesByCourseId(@PathVariable("course_id") BigInteger id) {
+    public List<Lecture> getLecturesByCourseId(@PathVariable("course_id") BigInteger id) {
         return lectureService.getAllLecturesByCourseId(id);
     }
 }

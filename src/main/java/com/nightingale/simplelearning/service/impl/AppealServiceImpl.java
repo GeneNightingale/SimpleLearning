@@ -3,7 +3,6 @@ package com.nightingale.simplelearning.service.impl;
 import com.nightingale.simplelearning.dao.AppealDAO;
 import com.nightingale.simplelearning.model.Appeal;
 import com.nightingale.simplelearning.model.User;
-import com.nightingale.simplelearning.model.enums.Status;
 import com.nightingale.simplelearning.service.AppealService;
 import com.nightingale.simplelearning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +14,11 @@ import java.util.List;
 @Service
 public class AppealServiceImpl implements AppealService {
 
+    @Autowired
     private AppealDAO appealDAO;
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    public void setAppealDAO(AppealDAO appealDAO) {
-        this.appealDAO = appealDAO;
-    }
 
     @Override
     public Appeal getAppealById(BigInteger id) {

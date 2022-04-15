@@ -1,10 +1,7 @@
 package com.nightingale.simplelearning.dao.impl;
 
-import com.nightingale.simplelearning.dao.CourseDAO;
 import com.nightingale.simplelearning.dao.MaterialDAO;
-import com.nightingale.simplelearning.dao.mapper.CourseListRowMapper;
 import com.nightingale.simplelearning.dao.mapper.MaterialRowMapper;
-import com.nightingale.simplelearning.model.Course;
 import com.nightingale.simplelearning.model.Material;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,12 +23,6 @@ public class MaterialDAOImpl implements MaterialDAO {
 
     @Autowired
     private MaterialRowMapper materialRowMapper;
-
-    @Autowired
-    private CourseDAO courseDAO;
-
-    @Autowired
-    private CourseListRowMapper courseListRowMapper;
 
     private static final Logger LOGGER = Logger.getLogger(MaterialDAOImpl.class.getName());
 
@@ -69,14 +60,8 @@ public class MaterialDAOImpl implements MaterialDAO {
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean deleteAllMaterialsByCourseId(BigInteger id) {
         try {
-            Course course = jdbcTemplate.queryForObject(courseDAO.SELECT_COURSE_BY_ID, courseListRowMapper, id);
-            if (course!=null) {
-                jdbcTemplate.update(DELETE_ALL_MATERIALS_BY_COURSE_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Course with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_ALL_MATERIALS_BY_COURSE_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

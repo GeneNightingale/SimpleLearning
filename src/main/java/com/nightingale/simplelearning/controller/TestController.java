@@ -1,5 +1,6 @@
 package com.nightingale.simplelearning.controller;
 
+import com.nightingale.simplelearning.controller.request.RequestTest;
 import com.nightingale.simplelearning.model.Test;
 import com.nightingale.simplelearning.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,10 @@ import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
-//TODO: THIS WILL NEED A REQUESTTEST WITH STUDENT'S ANSWERS
+//TODO: THIS WILL NEED A REQUEST TEST WITH STUDENT'S ANSWERS
 //      AS WELL AS A CHECK TO SEE IF THEY ARE RIGHT AND
 //      GENERATE A RESULT
+//NOTE: Accomplished, will need further testing
 @RestController
 @RequestMapping(value = "/api/test")
 public class TestController {
@@ -29,6 +31,14 @@ public class TestController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    //TODO: Actually check if this works
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/complete_test/{test_id}")
+    public ResponseEntity<?> completeTest(@Valid @RequestBody RequestTest requestTest, @PathVariable("test_id") BigInteger testId) {
+        testService.completeTest(requestTest, testId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @GetMapping
     public List<Test> getAllTests() {
         return testService.getAllTests();
@@ -36,7 +46,7 @@ public class TestController {
 
     @GetMapping("/{test_id}")
     public Test getTest(@PathVariable("test_id") BigInteger id) {
-        return testService.getTestById(id);
+        return testService.getTestByIdNoAnswer(id);
     }
 
     @PreAuthorize("hasRole('TEACHER')")

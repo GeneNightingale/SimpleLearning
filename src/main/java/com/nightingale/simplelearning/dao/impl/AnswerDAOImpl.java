@@ -25,12 +25,6 @@ public class AnswerDAOImpl implements AnswerDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private QuestionDAO questionDAO;
-
-    @Autowired
-    private QuestionRowMapper questionRowMapper;
-
-    @Autowired
     private AnswerRowMapper answerRowMapper;
 
     private static final Logger LOGGER = Logger.getLogger(AnswerDAOImpl.class.getName());
@@ -66,18 +60,11 @@ public class AnswerDAOImpl implements AnswerDAO {
     }
 
     @Override
+    @Transactional(rollbackFor = {DataAccessException.class})
     public boolean deleteAllAnswersByQuestionId(BigInteger id) {
         try {
-            //Check if this question exists at all
-            Question question = jdbcTemplate.queryForObject(questionDAO.SELECT_QUESTION_BY_ID, questionRowMapper, id);
-            //If it exists, delete its answers
-            if (question!=null) {
-                jdbcTemplate.update(DELETE_ANSWERS_BY_QUESTION_ID, id);
-                return true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Question with given ID");
-                return false;
-            }
+            jdbcTemplate.update(DELETE_ANSWERS_BY_QUESTION_ID, id);
+            return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

@@ -20,7 +20,11 @@ public interface UserDAO {
     String INSERT_USER = "INSERT INTO user (name, login, password, roleId) " +
             "VALUES (?, ?, ?, ?);";
 
+    String GET_USER_BY_RESULT_ID = "SELECT * FROM user join result ON " +
+            "user.userId = result.userId WHERE result.resultId = ?";
+
     public User getUserByLogin(String login);
     public User getUserById(BigInteger id);
+    public User getUserByResultId(BigInteger id);
     boolean save(String name, String login, String password, Role role);
 }

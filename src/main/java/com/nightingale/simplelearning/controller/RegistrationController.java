@@ -19,12 +19,9 @@ import javax.validation.Valid;
 @RequestMapping(value = "/api/register")
 public class RegistrationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
-    private RegistrationService registrationService;
 
     @Autowired
-    public void setRegistrationService(RegistrationService registrationService) {
-        this.registrationService = registrationService;
-    }
+    private RegistrationService registrationService;
 
     @PostMapping
     public ResponseEntity<?> signUp(@Valid @RequestBody RequestUser requestUser) {

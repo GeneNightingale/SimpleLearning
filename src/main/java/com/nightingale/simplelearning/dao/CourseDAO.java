@@ -2,7 +2,6 @@ package com.nightingale.simplelearning.dao;
 
 import com.nightingale.simplelearning.model.Course;
 import com.nightingale.simplelearning.model.User;
-import com.nightingale.simplelearning.model.enums.Role;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -31,11 +30,22 @@ public interface CourseDAO {
             "FROM `course` join coursemembership " +
             "on course.courseId=coursemembership.courseId where coursemembership.studentId = ?";
 
-    String SELECT_ALL_STUDENTS_BY_COURSE_ID = "SELECT user.userId, user.name, user.login, role.roleName  " +
+    //Implement if appeals go through
+    String SELECT_UNAVAILABLE_COURSES_BY_STUDENT = "SELECT course.courseId, course.title, course.description, course.teacherId " +
+            "FROM `course` join coursemembership " +
+            "on course.courseId=coursemembership.courseId where coursemembership.studentId <> ?";
+
+    String SELECT_ALL_STUDENTS_BY_COURSE_ID = "SELECT user.userId, user.name, user.login, user.password, role.roleName  " +
             "FROM user join coursemembership " +
             "on user.userId=coursemembership.studentId " +
             "JOIN role on user.roleId = role.roleId " +
             "where coursemembership.courseId = ?;";
+
+    String SELECT_TEACHER_BY_COURSE_ID = "SELECT user.userId, user.login, user.name, user.password, role.roleName " +
+            "FROM user join course " +
+            "on course.teacherId= user.userId " +
+            "JOIN role on role.roleId = user.roleId " +
+            "WHERE course.courseId = ?;";
 
     //Redundant perhaps
     //String GET_ALL_COURSES_BY_STUDENT = "SELECT * FROM `course` join coursemembership " +
@@ -55,7 +65,9 @@ public interface CourseDAO {
     public List<Course> getAllCourses();
     public List<Course> getAllCoursesByTeacher(BigInteger id);
     public List<Course> getAllCoursesByStudent(BigInteger id);
+    //public List<Course> getAllUnavailableCoursesByStudent(BigInteger id); //TODO: Implement if appeals go through
     public List<User> getAllStudentsByCourseId(BigInteger id);
+    public User getTeacherByCourseId(BigInteger id);
     boolean save(Course course);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Course newCourse);

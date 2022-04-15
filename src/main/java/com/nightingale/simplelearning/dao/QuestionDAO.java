@@ -27,7 +27,7 @@ public interface QuestionDAO {
     Question getQuestionById(BigInteger id);
     List<Question> getAllQuestionsByTestId(BigInteger testId);
     List<Question> getAllQuestions();
-    boolean deleteAllQuestionsByTestId(BigInteger id);   //TODO: IMPLEMENT NOW!!!
+    boolean deleteAllQuestionsByTestId(BigInteger id);
     boolean save(Question question, BigInteger testId);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Question newQuestion);

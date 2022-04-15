@@ -12,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class RegistrationServiceImpl implements RegistrationService {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
-    //private final TokenService tokenService;
 
     public RegistrationServiceImpl(UserService userService,
-                                   JwtTokenUtil jwtTokenUtil /*, TokenService tokenService*/) {
+                                   JwtTokenUtil jwtTokenUtil) {
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-        //this.tokenService = tokenService;
     }
 
     @Override
