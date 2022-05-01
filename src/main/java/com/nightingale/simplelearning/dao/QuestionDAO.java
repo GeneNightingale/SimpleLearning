@@ -13,15 +13,15 @@ public interface QuestionDAO {
 
     static final String SELECT_ALL_QUESTIONS = "SELECT * FROM question";
 
-    static final String INSERT_QUESTION_TO_TEST = "INSERT INTO question (text, answer, testId) " +
-            "VALUES (?, ?, ?)";
+    static final String INSERT_QUESTION_TO_TEST = "INSERT INTO question (questionNum, text, answer, testId) " +
+            "VALUES (?, ?, ?, ?)";
 
     static final String DELETE_QUESTION_BY_ID = "DELETE FROM question WHERE questionId = ?";
 
     static final String DELETE_QUESTIONS_BY_TEST_ID = "DELETE FROM question WHERE testId = ?";
 
     static final String UPDATE_QUESTION_BY_ID = "UPDATE question " +
-            "SET text = ?, answer = ? " +
+            "SET questionNum = ?, text = ?, answer = ? " +
             "WHERE questionId = ?;";
 
     Question getQuestionById(BigInteger id);

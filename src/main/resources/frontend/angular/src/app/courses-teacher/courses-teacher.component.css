@@ -1,0 +1,123 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.course-container {
+  width: 100%;
+  float: left;
+}
+
+.course-title{
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+}
+
+.course-button{
+  margin-top: 0.3em;
+  font-size: 1.5vw;
+  float: right;
+  cursor: pointer;
+}
+
+.teacher-name{
+  font-size: 1.25vw;
+}
+
+.course {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  padding: 4% 4%;
+  height: 10%;
+  text-align: left;
+}
+
+.add-course {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  padding: 4% 4%;
+  height: 10%;
+  text-align: left;
+}
+
+.course button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+}
+
+.add-course button {
+  margin-top: 1em;
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+.add-course-label{
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+  width: 100%;
+}
+
+input {
+  border: 0.1em solid rgba(0, 0, 0, 0.5);;
+  border-radius: 0.2em;
+  margin-top: 1em;
+  padding: 0.2em 0.3em;
+  width: 100%;
+  color: black;
+}
+
+textarea {
+  border: 0.1em solid rgba(0, 0, 0, 0.5);;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  width: 100%;
+  color: black;
+  min-height: 5em;
+  max-height: 14em;
+}
+
+.input-bad {
+  border: 0.1em solid red;
+  background: rgba(255, 172, 172, 1.0);
+}
+
+.hint {
+  font-size: 1.0vw;
+  margin-top: 2%;
+}

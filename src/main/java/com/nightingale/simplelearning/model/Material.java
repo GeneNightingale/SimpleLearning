@@ -1,8 +1,5 @@
 package com.nightingale.simplelearning.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -15,6 +12,8 @@ public class Material {
     private String title;
 
     private String link;
+
+    private boolean isPublic;
 
     public long getMaterialId() {
         return materialId;
@@ -40,6 +39,14 @@ public class Material {
         this.link = link;
     }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,11 +55,12 @@ public class Material {
         Material material = (Material) o;
         return Objects.equals(getMaterialId(), material.getMaterialId()) &&
                 Objects.equals(getTitle(), material.getTitle()) &&
-                Objects.equals(getLink(), material.getLink());
+                Objects.equals(getLink(), material.getLink()) &&
+                Objects.equals(isPublic(), material.isPublic());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMaterialId(), getTitle(), getLink());
+        return Objects.hash(getMaterialId(), getTitle(), getLink(), isPublic());
     }
 }

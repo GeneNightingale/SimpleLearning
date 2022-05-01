@@ -1,0 +1,175 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.course-container {
+  padding-top: 1vw;
+  width: 100%;
+  float: left;
+}
+
+.course-title{
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+}
+
+.course-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  float: right;
+  cursor: pointer;
+}
+
+.section-container {
+  padding-top: 1vw;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.1em;
+  float: left;
+}
+
+.section-title{
+  font-size: 1.5vw;
+  float: left;
+}
+
+.section-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  padding-left: 1em;
+  cursor: pointer;
+}
+
+.course {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+}
+
+.course-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+  padding-bottom: 30em;
+}
+
+.materials {
+  float: left;
+  width: 100%;
+  padding: 1% 1%;
+}
+
+.mat {
+  width: 100%;
+  display: block;
+}
+
+.material-name {
+  font-size: 1.5vw;
+  width: 80%;
+  float: left;
+  margin: 2% 2%;
+}
+
+.mat button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+.course button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+  margin-top: 0.5em;
+  border-radius: 0.2em;
+  border-color: black;
+}
+
+button :disabled {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor: not-allowed;
+  border-color: grey;
+}
+
+input {
+  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.2em;
+  padding-left: 0.3em;
+  width: 80%;
+  color: black;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 1.8vw;
+  float: left;
+}
+
+.input-bad {
+  border: 0.1em solid red;
+  background: rgba(255, 172, 172, 1.0);
+}
+
+textarea {
+  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  width: 100%;
+  color: black;
+  min-height: 6em;
+  max-height: 14em;
+}
+
+.add-material {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  height: 10%;
+  text-align: left;
+}
+
+.add-mat-input {
+  width: 100%;
+  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.2em;
+  padding-left: 0.3em;
+  color: black;
+  margin-top: 0.4em;
+  margin-bottom: 0.3em;
+  font-size: 1.5vw;
+  float: left;
+}

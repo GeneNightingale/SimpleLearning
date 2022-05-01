@@ -27,7 +27,6 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<?> signIn(@Valid @RequestBody RequestUser requestUser) {
-        System.out.println("Login: " + requestUser.getLogin() + ", Pass: " + requestUser.getPassword());
         try {
             authorizationService.validateRequestUser(requestUser);
 

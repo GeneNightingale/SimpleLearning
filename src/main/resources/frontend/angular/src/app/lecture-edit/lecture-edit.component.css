@@ -1,0 +1,165 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.lecture-container {
+  padding-top: 1vw;
+  width: 100%;
+  float: left;
+}
+
+.lecture-title{
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+}
+
+.lecture-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  float: right;
+  cursor: pointer;
+}
+
+.section-container {
+  padding-top: 1vw;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.1em;
+  float: left;
+}
+
+.section-title{
+  font-size: 1.5vw;
+  float: left;
+}
+
+.section-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  padding-left: 1em;
+  cursor: pointer;
+}
+
+.lecture {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+}
+
+.lecture-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+  padding-bottom: 30em;
+}
+
+.current-page{
+  padding-top: 0.25vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+}
+
+.course-button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+  cursor: pointer;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+  border-color: black;
+}
+
+button :disabled {
+  color:  grey;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor: not-allowed;
+  border-color: grey;
+}
+
+input {
+  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.2em;
+  padding-left: 0.3em;
+  width: 80%;
+  color: black;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 1.8vw;
+  float: left;
+}
+
+.input-bad {
+  border: 0.1em solid red;
+  background: rgba(255, 172, 172, 1.0);
+}
+
+textarea {
+  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  width: 100%;
+  color: black;
+  min-height: 17em;
+  max-height: 45em;
+}
+
+.form-control {
+  width: 10%;
+  padding: 0%;
+  margin: 0%;
+  float: left;
+  margin-left: 2em;
+  padding-left: 1.9em;
+  margin-bottom: 1em;
+}
+
+.action_btn {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+  border-color: black;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+  display: inline-block;
+  width: calc(40%);
+  margin: 5%;
+}
+
+.page-buttons{
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+}
+
+/*.action_btn :disabled {
+  color:  grey;
+}*/
+

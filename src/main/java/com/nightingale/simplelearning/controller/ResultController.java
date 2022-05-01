@@ -19,13 +19,13 @@ public class ResultController {
     @Autowired
     private ResultService resultService;
 
-    //TODO: Remove this once completeTest in TestService works
-    @PreAuthorize("hasRole('STUDENT')")
+    //CompleteTest in TestService works, unnecessary
+    /*@PreAuthorize("hasRole('STUDENT')")
     @PostMapping
     public ResponseEntity<?> saveResult(@Valid @RequestBody Result result) {
         resultService.save(result);
         return ResponseEntity.ok(HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/{result_id}")
     public Result getResult(@PathVariable("result_id") BigInteger id) {
@@ -45,7 +45,7 @@ public class ResultController {
     }
 
     @PostMapping("/by_student_and_test")
-    public List<Result> getResultByStudentAndTest(@Valid @RequestBody Result result) {
+    public Result getResultByStudentAndTest(@Valid @RequestBody Result result) {
         return resultService.getAllResultsByStudentAndTestId(
                 BigInteger.valueOf(result.getStudentId()),
                 BigInteger.valueOf(result.getTestId())

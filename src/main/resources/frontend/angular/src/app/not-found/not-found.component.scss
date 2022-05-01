@@ -1,0 +1,55 @@
+* {
+  color:  darkslategrey;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  background: rgba(156, 157, 175, 0.0);
+  /*background: lightgrey;*/
+  position: relative;
+  margin: auto;
+  width: 35%;
+  text-align: center;
+  border-radius: 1em;
+}
+
+.login-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%
+}
+.buttons {
+  text-align: left;
+}
+
+button {
+  padding-left: 1vh;
+  padding-right: 1vh;
+  font-size: 1.4em;
+  height: 2em;
+  color:  darkslategrey;
+  background: rgba(0, 0, 0, 0.0);
+  margin-top: 6%;
+  margin-bottom: 7%;
+  overflow: auto;
+  white-space: nowrap;
+  border: none;
+  cursor:pointer;
+}
+
+#authorize {
+  font-size: 1.4em;
+}
+
+#authorize:hover{
+  font-size: 1.5em;
+}
+
+.label {
+  font-size: 10vw;
+  text-align: center;
+  margin-top: 6%;
+}

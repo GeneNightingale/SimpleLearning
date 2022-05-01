@@ -9,6 +9,8 @@ public interface LectureService {
     Lecture getLectureById(BigInteger id);
     List<Lecture> getAllLecturesByCourseId(BigInteger courseId);
     List<Lecture> getAllLectures();
+    boolean makePublic(BigInteger lectureId);
+    boolean makePrivate(BigInteger lectureId);
     boolean save(Lecture lecture, BigInteger courseId);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Lecture newLecture);

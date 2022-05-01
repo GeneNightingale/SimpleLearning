@@ -47,6 +47,16 @@ public class MaterialDAOImpl implements MaterialDAO {
     }
 
     @Override
+    public List<Material> getAllMaterialsByCourseIdStudent(BigInteger courseId) {
+        try {
+            return jdbcTemplate.query(SELECT_MATERIALS_BY_COURSE_ID_STUDENT, materialRowMapper, courseId);
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            return null;
+        }
+    }
+
+    @Override
     public List<Material> getAllMaterials() {
         try {
             return jdbcTemplate.query(SELECT_ALL_MATERIALS, materialRowMapper);
@@ -61,6 +71,30 @@ public class MaterialDAOImpl implements MaterialDAO {
     public boolean deleteAllMaterialsByCourseId(BigInteger id) {
         try {
             jdbcTemplate.update(DELETE_ALL_MATERIALS_BY_COURSE_ID, id);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePublic(BigInteger materialId) {
+        try {
+            jdbcTemplate.update(MAKE_PUBLIC, materialId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger materialId) {
+        try {
+            jdbcTemplate.update(MAKE_PRIVATE, materialId);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

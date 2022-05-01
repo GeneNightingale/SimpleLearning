@@ -57,6 +57,16 @@ public class LectureDAOImpl implements LectureDAO {
     }
 
     @Override
+    public List<Lecture> getAllLecturesByCourseIdStudent(BigInteger courseId) {
+        try {
+            return jdbcTemplate.query(SELECT_LECTURES_BY_COURSE_ID_STUDENT, lectureRowMapper, courseId);
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            return null;
+        }
+    }
+
+    @Override
     public List<Lecture> getAllLectures() {
         try {
             return jdbcTemplate.query(SELECT_ALL_LECTURES, lectureRowMapper);
@@ -71,6 +81,30 @@ public class LectureDAOImpl implements LectureDAO {
     public boolean deleteAllLecturesByCourseId(BigInteger id) {
         try {
             jdbcTemplate.update(DELETE_ALL_LECTURES_BY_COURSE_ID, id);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePublic(BigInteger lectureId) {
+        try {
+            jdbcTemplate.update(MAKE_PUBLIC, lectureId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger lectureId) {
+        try {
+            jdbcTemplate.update(MAKE_PRIVATE, lectureId);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

@@ -11,6 +11,8 @@ public interface TestDAO {
 
     static final String SELECT_TESTS_BY_COURSE_ID = "SELECT * FROM test WHERE courseId = ?";
 
+    static final String SELECT_TESTS_BY_COURSE_ID_STUDENT = "SELECT * FROM test WHERE isPublic = 'true' AND courseId = ?";
+
     static final String SELECT_TEST_BY_RESULT_ID = "SELECT * FROM test join result ON " +
             "test.testId = result.testId WHERE result.resultId = ?";
 
@@ -27,11 +29,18 @@ public interface TestDAO {
             "SET title = ?, time = ? " +
             "WHERE testId = ?;";
 
+    String MAKE_PUBLIC = "UPDATE test SET isPublic = 'true' WHERE testId = ?;";
+
+    String MAKE_PRIVATE = "UPDATE test SET isPublic = 'false' WHERE testId = ?;";
+
     Test getTestById(BigInteger id);
-    List<Test> getAllTestsByCourseId(BigInteger testId);
+    List<Test> getAllTestsByCourseId(BigInteger courseId);
+    List<Test> getAllTestsByCourseIdStudent(BigInteger courseId);
     Test getTestByResultId(BigInteger id);
     List<Test> getAllTests();
     boolean deleteAllTestsByCourseId(BigInteger id);
+    boolean makePublic(BigInteger testId);
+    boolean makePrivate(BigInteger testId);
     boolean save(Test test, BigInteger courseId);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Test newTest);

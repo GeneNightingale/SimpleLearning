@@ -1,0 +1,82 @@
+* {
+  color:  #FFFFFF;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  /*background: rgba(156, 157, 175, 0.4);*/
+  background: lightgrey;
+  position: relative;
+  margin: auto;
+  width: 35%;
+  text-align: center;
+  border-radius: 1em;
+}
+
+.login-form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%
+}
+.buttons {
+  text-align: left;
+}
+
+button {
+  padding-left: 1vh;
+  padding-right: 1vh;
+  font-size: 1.2vw;
+  height: 5vh;
+  color:  #FFFFFF;
+  background: rgba(0, 0, 0, 0.0);
+  margin-top: 6%;
+  margin-bottom: 7%;
+  overflow: auto;
+  white-space: nowrap;
+  border: none;
+  cursor:pointer;
+}
+
+#authorize {
+  font-size: 1.2vw;
+}
+
+#authorizeDisabled {
+  color: grey;
+  cursor: not-allowed;
+}
+
+#authorize:hover{
+  font-size: 1.25vw;
+}
+
+#userName, password {
+  margin-top: 1%;
+}
+
+.label {
+  font-size: 1.4vw;
+  text-align: center;
+  margin-top: 6%;
+}
+
+input {
+  border: 0.1em solid rgba(0, 0, 0, 0.3);;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  width: 95%;
+  color: black;
+}
+
+.input-bad {
+  border: 0.1em solid red;
+  background: rgba(255, 172, 172, 1.0);
+}
+
+.hint {
+  font-size: 1.0vw;
+  margin-top: 2%;
+}

@@ -1,0 +1,35 @@
+<div id="main">
+  <div class="login-form" [formGroup]="form">
+    <br>
+    <div class = "label">Вход в аккаунт</div> <br>
+    <input id="login" [(ngModel)]="user.login" formControlName="login" maxlength = "30" autocomplete="off"
+      [ngClass] = "{'input-bad': login?.errors && (login?.dirty || login?.touched)}" placeholder="Логин">
+    <br>
+    <div *ngIf="login?.errors?.['minlength'] && (login?.dirty || login?.touched)">
+      <div class = "hint">Используйте не менее 4 символов</div>
+    </div>
+    <div *ngIf="login?.errors?.['required'] && (login?.dirty || login?.touched)">
+      <div class = "hint">Имя пользователя не может быть пустым</div>
+    </div>
+    <br>
+    <br>
+    <input id="password" [(ngModel)]="user.password" formControlName="password" maxlength = "30" type="password"
+      [ngClass] = "{'input-bad': password?.errors && (password?.dirty || password?.touched)}" placeholder="Пароль">
+    <div  *ngIf="password?.errors?.['required'] && (password?.dirty || password?.touched)">
+      <div class = "hint">Пароль не может быть пустым</div>
+    </div>
+    <div  *ngIf="password?.errors?.['minlength'] && (password?.dirty || password?.touched)">
+      <div class = "hint">Используйте не менее 6 символов</div>
+    </div>
+    <div *ngIf="isLoginFailed">
+      <div class = "hint">Неверное имя пользователя или пароль</div>
+    </div>
+    <div *ngIf="!form.valid">
+        <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled>Войти</button>
+    </div>
+    <div *ngIf="form.valid">
+        <button id="authorize" type="button" (click)="onSubmit()">Войти</button>
+    </div>
+    <br>
+  </div>
+</div>

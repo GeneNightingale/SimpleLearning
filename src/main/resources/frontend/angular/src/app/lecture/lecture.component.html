@@ -1,0 +1,25 @@
+<div id="main" #courseTitle>
+
+  <div class="course">
+    <a class="course-title">{{lecture.title}}</a>
+    <a>Часть курса: {{course.title}}</a>
+  </div>
+
+  <!--Here Should be the lecture-->
+
+  <br>
+  <div class="course">
+    <div class="materials">
+      <div class="text" style="white-space: pre-line">
+        {{currentPage.text}}
+      </div>
+    </div>
+
+    <!--Here should be the buttons-->
+
+    <div class="page-buttons">
+      <button name="submit" class="action_btn" type="submit" (click)="nextPage()">{{rightButtonText}}</button>
+      <button name="submit" class="action_btn" type="submit" (click)="prevPage()">{{leftButtonText}}</button>
+    </div>
+  </div>
+</div>

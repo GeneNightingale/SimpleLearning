@@ -1,0 +1,61 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  /*background: lightgrey;*/
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.course-title{
+  width: 100%;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+}
+
+.teacher-name{
+  font-size: 1.25vw;
+}
+
+.course {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  padding: 4% 4%;
+  height: 10%;
+  text-align: left;
+}
+
+.course button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+}
+
+button:hover{
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 1.4vw;
+}

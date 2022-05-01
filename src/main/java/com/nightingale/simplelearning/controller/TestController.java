@@ -13,10 +13,6 @@ import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
-//TODO: THIS WILL NEED A REQUEST TEST WITH STUDENT'S ANSWERS
-//      AS WELL AS A CHECK TO SEE IF THEY ARE RIGHT AND
-//      GENERATE A RESULT
-//NOTE: Accomplished, will need further testing
 @RestController
 @RequestMapping(value = "/api/test")
 public class TestController {
@@ -31,7 +27,6 @@ public class TestController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    //TODO: Actually check if this works
     @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/complete_test/{test_id}")
     public ResponseEntity<?> completeTest(@Valid @RequestBody RequestTest requestTest, @PathVariable("test_id") BigInteger testId) {
@@ -46,7 +41,21 @@ public class TestController {
 
     @GetMapping("/{test_id}")
     public Test getTest(@PathVariable("test_id") BigInteger id) {
-        return testService.getTestByIdNoAnswer(id);
+        return testService.getTestById(id);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_public/{test_id}")
+    public ResponseEntity<?> makePublic(@PathVariable("test_id") BigInteger testId) {
+        testService.makePublic(testId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_private/{test_id}")
+    public ResponseEntity<?> makePrivate(@PathVariable("test_id") BigInteger testId) {
+        testService.makePrivate(testId);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('TEACHER')")

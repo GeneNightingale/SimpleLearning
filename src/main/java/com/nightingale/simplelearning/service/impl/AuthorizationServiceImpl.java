@@ -33,8 +33,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        System.out.println(userDetails.getId() + " " + userDetails.getName() + " " + userDetails.getRole());
-
         return userDetails;
     }
 

@@ -1,0 +1,47 @@
+<div id="main">
+
+  <div class="course">
+    <a class="course-title">{{course.title}}</a>
+    <a>Преподаёт: {{teacher.name}}</a>
+    <p>{{course.description}}</p>
+  </div>
+
+  <!--HERE ARE ALL THE MATERIALS-->
+
+  <div class="course">
+    <div class="section-container">
+      <a class="section-title">Веб-ресурсы</a>
+    </div>
+    <div class="materials">
+      <div class="text" *ngFor="let material of course.materials">
+        <div class = "mat">
+          <a class="material" href={{material.link}} target="_blank">🌐 {{material.title}}</a>
+        </div>
+      </div>
+    </div>
+    <!--<div class="lectures">-->
+    <div class="section-container">
+      <a class="section-title">Лекции</a>
+    </div>
+    <div class="materials">
+      <div class="text" *ngFor="let lecture of course.lectures">
+        <div class = "mat">
+          <a class="material" [routerLink]="['/lecture/'+lecture.lectureId]">📕 {{lecture.title}}</a>
+        </div>
+      </div>
+    </div>
+    <!--<div class="tests">-->
+    <div class="section-container">
+      <a class="section-title">Тесты</a>
+    </div>
+    <div class="materials">
+      <div class="text" *ngFor="let test of tests">
+        <div class = "mat">
+          <a class="material" [hidden]= "test.passed" (click)="openTest(test.testId)" [routerLink]="['/test/'+test.testId]">📄 {{test.title}}</a>
+          <a class="material" [hidden]= "!test.passed" style="opacity: 80%">📄 {{test.title}}</a>
+          <a class="test-grade" [hidden]= "!test.passed" style="opacity: 80%">Пройдено - {{test.grade}}%</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

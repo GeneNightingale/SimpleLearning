@@ -11,6 +11,8 @@ public interface LectureDAO {
 
     static final String SELECT_LECTURES_BY_COURSE_ID = "SELECT * FROM lecture WHERE courseId = ?";
 
+    static final String SELECT_LECTURES_BY_COURSE_ID_STUDENT = "SELECT * FROM lecture WHERE isPublic = 'true' AND courseId = ?";
+
     static final String SELECT_ALL_LECTURES = "SELECT * FROM lecture";
 
     static final String INSERT_LECTURE_TO_COURSE = "INSERT INTO lecture (title, courseId) VALUES (?, ?)";
@@ -23,10 +25,17 @@ public interface LectureDAO {
             "SET title = ? " +
             "WHERE lectureId = ?;";
 
+    String MAKE_PUBLIC = "UPDATE lecture SET isPublic = 'true' WHERE lectureId = ?;";
+
+    String MAKE_PRIVATE = "UPDATE lecture SET isPublic = 'false' WHERE lectureId = ?;";
+
     Lecture getLectureById(BigInteger id);
     List<Lecture> getAllLecturesByCourseId(BigInteger courseId);
+    List<Lecture> getAllLecturesByCourseIdStudent(BigInteger courseId);
     List<Lecture> getAllLectures();
     boolean deleteAllLecturesByCourseId(BigInteger id);
+    boolean makePublic(BigInteger lectureId);
+    boolean makePrivate(BigInteger lectureId);
     boolean save(Lecture lecture, BigInteger courseId);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Lecture newLecture);

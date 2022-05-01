@@ -55,15 +55,51 @@ public class CourseController {
         return courseService.getAllCoursesByStudent(studentId);
     }
 
+    @PreAuthorize("hasRole('TEACHER')")
     @GetMapping("/students_by_course_id/{course_id}")
     public List<User> getStudentsByCourseId(@PathVariable("course_id") BigInteger courseId) {
         return courseService.getAllStudentsByCourseId(courseId);
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/not_students_by_course_id/{course_id}")
+    public List<User> getNotStudentsByCourseId(@PathVariable("course_id") BigInteger courseId) {
+        return courseService.getAllNotStudentsByCourseId(courseId);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/add_member_to_course/{course_id}")
+    public ResponseEntity<?> addMemberToCourse(@PathVariable("course_id") BigInteger courseId, @RequestBody BigInteger studentId) {
+        courseService.addCourseMember(courseId, studentId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @PostMapping("/remove_member_from_course/{course_id}")
+    public ResponseEntity<?> removeMemberFromCourse(@PathVariable("course_id") BigInteger courseId, @RequestBody BigInteger studentId) {
+        courseService.removeCourseMember(courseId, studentId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_public/{course_id}")
+    public ResponseEntity<?> makePublic(@PathVariable("course_id") BigInteger courseId) {
+        courseService.makePublic(courseId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_private/{course_id}")
+    public ResponseEntity<?> makePrivate(@PathVariable("course_id") BigInteger courseId) {
+        courseService.makePrivate(courseId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/{course_id}")
     public ResponseEntity<?> updateCourse(@Valid @RequestBody Course course, @PathVariable("course_id") BigInteger id) {
         courseService.update(id, course);
+        System.out.println(course.getTitle() + course.getDescription());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

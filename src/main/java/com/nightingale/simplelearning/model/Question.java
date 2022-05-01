@@ -7,6 +7,8 @@ public class Question {
 
     private long questionId;
 
+    private long questionNum;
+
     private String text;
 
     private String answer;
@@ -19,6 +21,14 @@ public class Question {
 
     public void setQuestionId(long questionId) {
         this.questionId = questionId;
+    }
+
+    public long getQuestionNum() {
+        return questionNum;
+    }
+
+    public void setQuestionNum(long questionNum) {
+        this.questionNum = questionNum;
     }
 
     public String getText() {
@@ -52,6 +62,7 @@ public class Question {
         if (!super.equals(o)) return false;
         Question question = (Question) o;
         return Objects.equals(getQuestionId(), question.getQuestionId()) &&
+                Objects.equals(getQuestionNum(), question.getQuestionNum()) &&
                 Objects.equals(getText(), question.getText()) &&
                 Objects.equals(getAnswer(), question.getAnswer()) &&
                 Objects.equals(getAnswers(), question.getAnswers());
@@ -59,7 +70,7 @@ public class Question {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getQuestionId(), getText(), getAnswer(), getAnswers());
+        return Objects.hash(getQuestionId(), getQuestionNum(), getText(), getAnswer(), getAnswers());
     }
 }
 

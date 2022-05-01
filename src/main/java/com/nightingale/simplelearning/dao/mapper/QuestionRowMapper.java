@@ -15,9 +15,9 @@ public class QuestionRowMapper implements RowMapper<Question> {
         Question question = new Question();
 
         question.setQuestionId(rs.getInt("questionId"));
+        question.setQuestionNum(rs.getInt("questionNum"));
         question.setText(rs.getString("text"));
         question.setAnswer(rs.getString("answer"));
-        //TODO: DO SOMETHING ABOUT THE ANSWER LIST
 
         return question;
 

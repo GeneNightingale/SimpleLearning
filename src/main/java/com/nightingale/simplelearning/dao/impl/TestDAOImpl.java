@@ -61,6 +61,16 @@ public class TestDAOImpl implements TestDAO {
     }
 
     @Override
+    public List<Test> getAllTestsByCourseIdStudent(BigInteger courseId) {
+        try {
+            return jdbcTemplate.query(SELECT_TESTS_BY_COURSE_ID_STUDENT, testRowMapper, courseId);
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            return null;
+        }
+    }
+
+    @Override
     public Test getTestByResultId(BigInteger id) {
         try {
             Test test = jdbcTemplate.queryForObject(SELECT_TEST_BY_RESULT_ID, testRowMapper, id);
@@ -90,6 +100,30 @@ public class TestDAOImpl implements TestDAO {
     public boolean deleteAllTestsByCourseId(BigInteger id) {
         try {
             jdbcTemplate.update(DELETE_TESTS_BY_COURSE_ID, id);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePublic(BigInteger testId) {
+        try {
+            jdbcTemplate.update(MAKE_PUBLIC, testId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger testId) {
+        try {
+            jdbcTemplate.update(MAKE_PRIVATE, testId);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

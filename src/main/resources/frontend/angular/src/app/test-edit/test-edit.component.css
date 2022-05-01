@@ -1,0 +1,209 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.test-container {
+  /*padding-top: 1vw;*/
+  width: 100%;
+  float: left;
+}
+
+.test-title{
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 2vw;
+  float: left;
+}
+
+.part-of {
+  padding-bottom: 1.5vw;
+}
+
+.test-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  float: right;
+  cursor: pointer;
+}
+
+.section-container {
+  padding-top: 1vw;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.1em;
+  float: left;
+}
+
+.section-title{
+  font-size: 1.5vw;
+  float: left;
+}
+
+.section-button{
+  margin-top: 0.5em;
+  font-size: 1.5vw;
+  padding-left: 1em;
+  cursor: pointer;
+}
+
+.test {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+}
+
+.test-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+  padding-bottom: 30em;
+}
+
+.current-page{
+  padding-top: 0.25vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+}
+
+.course-button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+  cursor: pointer;
+}
+
+.hint {
+  float: left;
+}
+
+.add-answer {
+  padding-bottom: 2em;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+  border-color: black;
+  float: right;
+}
+
+button :disabled {
+  color:  grey;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor: not-allowed;
+  border-color: grey;
+}
+
+input {
+  border: 0.1em solid rgba(0, 0, 0, 0.5);;
+  border-radius: 0.2em;
+  padding-left: 0.3em;
+  width: 80%;
+  color: black;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 1.5vw;
+  float: left;
+}
+
+.input-bad {
+  border: 0.1em solid red;
+  background: rgba(255, 172, 172, 1.0);
+}
+
+textarea {
+  border: 0.1em solid rgba(0, 0, 0, 0.5);;
+  border-radius: 0.2em;
+  padding: 0.2em 0.3em;
+  width: 100%;
+  color: black;
+  min-height: 7em;
+  max-height: 30em;
+  margin-bottom: 1em;
+}
+
+.form-control {
+  width: 30%;
+  padding: 0%;
+  margin: 0%;
+  float: left;
+  margin-left: 2em;
+  padding-left: 1.9em;
+  margin-bottom: 1em;
+  border-color: grey;
+  border-width: 1px;
+}
+
+.action_btn {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+  border-color: black;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+  display: inline-block;
+  width: calc(40%);
+  margin: 1% 5% 5%;
+}
+
+.page-buttons{
+  width: 100%;
+  margin: 0 auto;
+  display: inline;
+}
+
+.answers-label {
+  width: 85%;
+}
+
+.answers-line {
+  width: 100%;
+  display: block;
+  float: left;
+  padding-top: 1.5vw;
+  padding-bottom: 1.5vw;
+}
+
+.radio-line {
+  width: 100%;
+  display: block;
+  padding-left: 1em;
+  float: left;
+}
+
+.radio-circle{
+  margin-top: 0.28em;
+  width: 5%;
+}
+
+.radio-label{
+  width: 85%;
+}
+
+.add-answer-input{
+  width: 100%;
+}
+

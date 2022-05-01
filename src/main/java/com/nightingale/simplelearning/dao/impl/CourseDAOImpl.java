@@ -59,10 +59,28 @@ public class CourseDAOImpl implements CourseDAO{
                 course.setTests(tests);
                 List<User> students = getAllStudentsByCourseId(id);
                 course.setStudents(students);
-                course.setTeacher(getTeacherByCourseId(id));
-                //TODO: ADD APPEALS (?)
-                //List<Appeal> appeals = testDAO.getAllAppealsByCourseId(id);
-                //                course.setAppeals(appeals);
+                return course;
+            } else
+                return null;
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.log(Level.WARNING, e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public Course getCourseByIdStudent(BigInteger id) {
+        try {
+            Course course = jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID_STUDENT, courseListRowMapper, id);
+            if (course != null) {
+                List<Material> materials = materialDAO.getAllMaterialsByCourseIdStudent(id);
+                course.setMaterials(materials);
+                List<Lecture> lectures = lectureDAO.getAllLecturesByCourseIdStudent(id);
+                course.setLectures(lectures);
+                List<Test> tests = testDAO.getAllTestsByCourseIdStudent(id);
+                course.setTests(tests);
+                List<User> students = getAllStudentsByCourseId(id);
+                course.setStudents(students);
                 return course;
             } else
                 return null;
@@ -86,10 +104,6 @@ public class CourseDAOImpl implements CourseDAO{
                 course.setTests(tests);
                 List<User> students = getAllStudentsByCourseId(id);
                 course.setStudents(students);
-                course.setTeacher(getTeacherByCourseId(id));
-                //TODO: ADD APPEALS (?)
-                //List<Appeal> appeals = testDAO.getAllAppealsByCourseId(id);
-                //                course.setAppeals(appeals);
                 return course;
             } else
                 return null;
@@ -147,6 +161,23 @@ public class CourseDAOImpl implements CourseDAO{
     }
 
     @Override
+    public List<User> getAllNotStudentsByCourseId(BigInteger id) {
+        try {
+            Course course = jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID, courseListRowMapper, id);
+            if (course!=null) {
+                return jdbcTemplate.query(SELECT_ALL_NOT_STUDENTS_BY_COURSE_ID, userRowMapper, id);
+            } else {
+                LOGGER.log(Level.WARNING, "No Course with given ID");
+                return null;
+            }
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return null;
+        }
+    }
+
+    @Override
     public User getTeacherByCourseId(BigInteger id) {
         try {
             Course course = jdbcTemplate.queryForObject(SELECT_COURSE_BY_ID, courseListRowMapper, id);
@@ -164,10 +195,67 @@ public class CourseDAOImpl implements CourseDAO{
     }
 
     @Override
+    public boolean addCourseMember(BigInteger courseId, BigInteger studentId) {
+        try {
+            Course course = getCourseById(courseId);
+            User user = userDAO.getUserById(studentId);
+
+            if (course != null && user != null && user.getRole().toString().equals("STUDENT")) {
+                jdbcTemplate.update(ADD_COURSE_MEMBER, courseId, studentId);
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "No Course and/or Student with given IDs");
+                return false;
+            }
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeCourseMember(BigInteger courseId, BigInteger studentId) {
+        try {
+            jdbcTemplate.update(REMOVE_COURSE_MEMBER, courseId, studentId);
+            jdbcTemplate.update(REMOVE_COURSE_MEMBERS_RESULTS, studentId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePublic(BigInteger courseId) {
+        try {
+            jdbcTemplate.update(MAKE_PUBLIC, courseId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger courseId) {
+        try {
+            jdbcTemplate.update(MAKE_PRIVATE, courseId);
+            return true;
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
     @Transactional
     public boolean save(Course course) {
         try {
-            jdbcTemplate.update(INSERT_COURSE, course.getTitle(), course.getTeacher().getUserId(), course.getDescription());
+            jdbcTemplate.update(INSERT_COURSE, course.getTitle(), course.getTeacherId(), course.getDescription());
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -191,6 +279,7 @@ public class CourseDAOImpl implements CourseDAO{
                 //IF THAT'S DONE, TRY TO DELETE Course ITSELF
                 if (materialDeletionSuccessfulResult && lectureDeletionSuccessfulResult &&
                         testDeletionSuccessfulResult && appealDeletionSuccessfulResult) {
+                    jdbcTemplate.update(CLEAN_UP_MEMBERS, id);
                     jdbcTemplate.update(DELETE_COURSE_BY_ID, id);
                     return true;
                 } else

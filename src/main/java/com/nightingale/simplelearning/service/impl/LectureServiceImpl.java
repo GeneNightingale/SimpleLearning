@@ -31,6 +31,16 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    public boolean makePublic(BigInteger lectureId) {
+        return lectureDAO.makePublic(lectureId);
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger lectureId) {
+        return lectureDAO.makePrivate(lectureId);
+    }
+
+    @Override
     public boolean save(Lecture lecture, BigInteger courseId) {
         return lectureDAO.save(lecture, courseId);
     }

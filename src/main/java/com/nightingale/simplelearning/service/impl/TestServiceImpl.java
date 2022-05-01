@@ -1,16 +1,17 @@
 package com.nightingale.simplelearning.service.impl;
 
 import com.nightingale.simplelearning.controller.request.RequestTest;
-import com.nightingale.simplelearning.dao.QuestionDAO;
 import com.nightingale.simplelearning.dao.TestDAO;
 import com.nightingale.simplelearning.model.Question;
 import com.nightingale.simplelearning.model.Result;
 import com.nightingale.simplelearning.model.Test;
+import com.nightingale.simplelearning.model.User;
 import com.nightingale.simplelearning.service.QuestionService;
 import com.nightingale.simplelearning.service.ResultService;
 import com.nightingale.simplelearning.service.TestService;
 import com.nightingale.simplelearning.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -35,22 +36,60 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Test getTestById(BigInteger id) {
-        return testDAO.getTestById(id);
+        User currentUser = userService.getCurrentUser();
+        switch (currentUser.getRole().toString()) {
+            case "STUDENT":
+                return getTestByIdNoAnswer(id);
+            case "TEACHER":
+                return testDAO.getTestById(id);
+            default:
+                return null;
+        }
     }
 
-    //Prevents test answers from being accessible on the front-end
+    //Prevents test answers from being accessible to students
     @Override
     public Test getTestByIdNoAnswer(BigInteger id) {
-        Test test = getTestById(id);
+        Test test = testDAO.getTestById(id);
         List<Question> questions = test.getQuestions();
         questions.forEach(question -> question.setAnswer(""));
         test.setQuestions(questions);
+
+        Result result = resultService.getAllResultsByStudentAndTestId(
+                BigInteger.valueOf(userService.getCurrentUser().getUserId()),
+                BigInteger.valueOf(test.getTestId())
+        );
+
+        if (result != null) {
+            test.setPassed(true);
+            test.setGrade(result.getScore());
+        } else
+            test.setPassed(false);
+
         return test;
     }
 
     @Override
     public List<Test> getAllTestsByCourseId(BigInteger courseId) {
-        return testDAO.getAllTestsByCourseId(courseId);
+        User currentUser = userService.getCurrentUser();
+        switch (currentUser.getRole().toString()) {
+            case "STUDENT":
+                List<Test> tests = testDAO.getAllTestsByCourseId(courseId);
+                CollectionUtils.filter(tests, test -> ((Test) test).isPublic());
+                for (Test test : tests) {
+                    Result result = resultService.getAllResultsByStudentAndTestId(BigInteger.valueOf(currentUser.getUserId()), BigInteger.valueOf(test.getTestId()));
+                    if (result != null) {
+                        test.setPassed(true);
+                        test.setGrade(result.getScore());
+                    } else
+                        test.setPassed(false);
+                }
+                return tests;
+            case "TEACHER":
+                return testDAO.getAllTestsByCourseId(courseId);
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -85,6 +124,16 @@ public class TestServiceImpl implements TestService {
         testResult.setTestId(testId.intValue());                                //Set testId to the one given
         testResult.setStudentId(userService.getCurrentUser().getUserId());      //Set studentId to the current one
         return resultService.save(testResult);
+    }
+
+    @Override
+    public boolean makePublic(BigInteger testId) {
+        return testDAO.makePublic(testId);
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger testId) {
+        return testDAO.makePrivate(testId);
     }
 
     @Override

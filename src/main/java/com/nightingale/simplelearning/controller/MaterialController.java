@@ -37,6 +37,20 @@ public class MaterialController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_public/{material_id}")
+    public ResponseEntity<?> makePublic(@PathVariable("material_id") BigInteger materialId) {
+        materialService.makePublic(materialId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_private/{material_id}")
+    public ResponseEntity<?> makePrivate(@PathVariable("material_id") BigInteger materialId) {
+        materialService.makePrivate(materialId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/{material_id}")
     public ResponseEntity<?> updateMaterial(@Valid @RequestBody Material material, @PathVariable("material_id") BigInteger id) {
         materialService.update(id, material);

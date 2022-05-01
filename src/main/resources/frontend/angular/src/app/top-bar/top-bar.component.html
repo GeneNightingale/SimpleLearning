@@ -1,0 +1,81 @@
+<div>
+  <ul>
+    <li class="title"><a (click)="openHomePage()" ><img [src]="'../../assets/logo.png'" alt="logo"></a></li>
+
+    <!--Navigation buttons-->
+      <div class="centred-part">
+
+        <ng-template [ngIf]="isAdmin">
+          <li class="top-bar"><a (click)="nothing()" >Панель админа</a></li>
+        </ng-template>
+        <ng-template [ngIf]="isTeacher">
+          <li class="top-bar"><a (click)="nothing()">Панель учителя</a></li>
+        </ng-template>
+        <ng-template [ngIf]="isStudent">
+          <li class="top-bar"><a (click)="nothing()">Панель студента</a></li>
+        </ng-template>
+
+        <!--Placeholder for a potential another button-->
+        <!--<li class="top-bar"><a (click)="nothing()">Пункт</a></li>-->
+
+      </div>
+
+    <!--Shows username and role icon on top bar-->
+    <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+      <ng-template [ngIf]="isAdmin">
+        <li class="exit-bar"><a >🔧{{this.curUser}}</a></li>
+      </ng-template>
+      <ng-template [ngIf]="isTeacher">
+        <li class="exit-bar"><a >👓{{this.curUser}}</a></li>
+      </ng-template>
+      <ng-template [ngIf]="isStudent">
+        <li class="exit-bar"><a >🎓{{this.curUser}}</a></li>
+      </ng-template>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"><a (click)="logOut()" >Выйти</a></li>
+    </ng-template>
+    <!--Login/Logout button-->
+    <ng-template #loggedOut>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="exit-bar"><a (click)="openAuthorization()" >Вход</a></li>
+    </ng-template>
+  </ul>
+</div>
+
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a (click)="openHomePage()" ><img [src]="'../../assets/logo.png'" alt="logo"></a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+
+        <ng-template [ngIf]="isAdmin" [ngIfElse]="userView">
+          <a class="nav-link" (click)="nothing()">Панель админа</a>
+        </ng-template>
+        <ng-template #userView>
+          <a class="nav-link" (click)="nothing()">Панель не админа</a>
+        </ng-template>
+
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="nothing()">Пункт</a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-2">
+      <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+        <a class="nav-link" href="#">🎓{{this.curUser}}</a>
+        <a class="nav-link" (click)="logOut()">Выйти</a>
+      </ng-template>
+      <ng-template #loggedOut>
+        <a class="nav-link" (click)="openAuthorization()">Вход</a>
+      </ng-template>
+    </form>
+  </div>
+</nav>-->

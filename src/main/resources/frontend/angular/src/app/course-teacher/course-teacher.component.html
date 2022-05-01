@@ -1,0 +1,173 @@
+<div id="main">
+
+  <!--Course controls-->
+  <div class="course">
+    <div class="course-form" [formGroup]="form">
+    <div class="course-container">
+      <input id="title" [hidden]="!isInEditMode" [(ngModel)]="courseModel.title" formControlName="title" maxlength = "60" autocomplete="off"
+             [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" [value]="course.title">
+      <a class="course-title" [hidden]="isInEditMode">{{course.title}}</a>
+      <a class="course-title" [hidden]="isInEditMode || course.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
+      <a class="course-button" [hidden]="isInEditMode">  </a>
+      <a class="course-button" title="Студенты" (click)="getCourseStudents(course.courseId)">👨‍🎓</a>
+      <a class="course-button">  </a>
+      <a class="course-button" title="Отменить" [hidden]="!isInEditMode" (click)="uneditCourse()">🚫</a>
+      <a class="course-button" [hidden]="!isInEditMode">  </a>
+      <a class="course-button" title="Сохранить" [hidden]="!isInEditMode" (click)="submitCourse(course.courseId)">✔</a>
+      <a class="course-button" title="Редактировать" [hidden]="isInEditMode" (click)="editCourse()">📝</a>
+      <a class="course-button">  </a>
+      <a class="course-button" title="Скрыть" [hidden]="!course.public" (click)="hideCourse(course.courseId)">👁</a>
+      <a class="course-button" title="Опубликовать" [hidden]="course.public" (click)="showCourse(course.courseId)">👁</a>
+    </div>
+
+    <textarea id="description" [hidden]="!isInEditMode" [(ngModel)]="courseModel.description" maxlength = "4096" type="text"
+              [value]="course.description">
+    </textarea>
+    <p [hidden]="isInEditMode">{{course.description}}</p>
+    </div>
+  </div>
+
+  <!--HERE ARE ALL THE MATERIALS-->
+
+  <div class="course-content">
+    <!--Materials/Web-Resources-->
+    <div class="section-container">
+      <a class="section-title">Веб-ресурсы</a>
+      <a class="section-button" [hidden]="isInAddMatMode" title="Добавить" (click)="addMaterial()">➕</a>
+      <a class="section-button" [hidden]="!isInAddMatMode" title="Отменить" (click)="unaddMaterial()">🚫</a>
+    </div>
+    <div class="materials">
+      <!--Add material controls-->
+      <div class="course-form" [formGroup]="formMaterial">
+        <div class="add-material">
+        <div class="course-form" [hidden]="!isInAddMatMode" [formGroup]="formMaterial">
+          <a class="add-course-label" >Добавить веб-ресурс</a>
+          <br class="add-course-label">
+          <input class="add-mat-input" id="materialTitle" [(ngModel)]="material.title" formControlName="materialTitle" maxlength = "120" autocomplete="off"
+                 [ngClass] = "{'input-bad': materialTitle?.errors && (materialTitle?.dirty || materialTitle?.touched)}" placeholder="Название">
+          <br>
+          <div *ngIf="materialTitle?.errors?.['minlength'] && (materialTitle?.dirty || materialTitle?.touched)">
+            <div class = "hint">Используйте не менее 4 символов</div>
+          </div>
+          <div *ngIf="materialTitle?.errors?.['required'] && (materialTitle?.dirty || materialTitle?.touched)">
+            <div class = "hint">Название не может быть пустым</div>
+          </div>
+          <br>
+          <input class="add-mat-input" id="materialLink" [(ngModel)]="material.link" formControlName="materialLink" maxlength = "120" autocomplete="off"
+                 [ngClass] = "{'input-bad': materialLink?.errors && (materialLink?.dirty || materialLink?.touched)}" placeholder="Ссылка">
+          <br>
+          <div *ngIf="materialLink?.errors?.['minlength'] && (materialLink?.dirty || materialLink?.touched)">
+            <div class = "hint">Используйте не менее 4 символов</div>
+          </div>
+          <div *ngIf="materialLink?.errors?.['required'] && (materialLink?.dirty || materialLink?.touched)">
+            <div class = "hint">Ссылка не может быть пустой</div>
+          </div>
+          <br>
+          <div *ngIf="!formMaterial.valid">
+            <button class="button" (click)="createMaterial()" disabled>Добавить веб-ресурс</button>
+          </div>
+          <div *ngIf="formMaterial.valid">
+            <button class="button" (click)="createMaterial()">Добавить веб-ресурс</button>
+          </div>
+          <br>
+        </div>
+      </div>
+      </div>
+      <div class = "mat" *ngFor="let material of course.materials">
+        <a class="material-name" [hidden]="!material.public">🌐 {{material.title}}</a>
+        <a class="material-name" [hidden]= "material.public" style="opacity: 70%">🌐 {{material.title}} (Скрыт)</a>
+        <!--<a class="material-name" [hidden]="material.public" style="padding-left: 0.5em; filter: opacity(50%)"></a>-->
+        <a class="course-button" title="Удалить" (click)="deleteMaterial(material.materialId)">❌</a>
+        <a class="course-button">  </a>
+        <a class="course-button" title="Скрыть" [hidden]="!material.public" (click)="hideMaterial(material.materialId)">👁</a>
+        <a class="course-button" title="Опубликовать" [hidden]="material.public" (click)="showMaterial(material.materialId)">👁</a>
+      </div>
+    </div>
+
+    <!--Lectures-->
+    <div class="section-container">
+      <a class="section-title">Лекции</a>
+      <a class="section-button" [hidden]="isInAddLecMode" title="Добавить" (click)="addLecture()">➕</a>
+      <a class="section-button" [hidden]="!isInAddLecMode" title="Отменить" (click)="unaddLecture()">🚫</a>
+    </div>
+      <!--lecture controls-->
+      <div class="add-material">
+        <div class="course-form" [hidden]="!isInAddLecMode" [formGroup]="formLecture">
+          <a class="add-course-label" >Добавить лекцию</a>
+          <br class="add-course-label">
+          <input class="add-mat-input" id="lectureTitle" [(ngModel)]="lecture.title" formControlName="lectureTitle" maxlength = "60" autocomplete="off"
+                 [ngClass] = "{'input-bad': lectureTitle?.errors && (lectureTitle?.dirty || lectureTitle?.touched)}" placeholder="Название">
+          <br>
+          <div *ngIf="lectureTitle?.errors?.['minlength'] && (lectureTitle?.dirty || lectureTitle?.touched)">
+            <div class = "hint">Используйте не менее 4 символов</div>
+          </div>
+          <div *ngIf="lectureTitle?.errors?.['required'] && (lectureTitle?.dirty || lectureTitle?.touched)">
+            <div class = "hint">Название не может быть пустым</div>
+          </div>
+          <br>
+          <div *ngIf="!formLecture.valid">
+            <button class="button" (click)="createLecture()" disabled>Добавить лекцию</button>
+          </div>
+          <div *ngIf="formLecture.valid">
+            <button class="button" (click)="createLecture()">Добавить лекцию</button>
+          </div>
+          <br>
+        </div>
+      </div>
+    <div class="materials">
+        <div class = "mat" *ngFor="let lecture of course.lectures">
+          <a class="material-name" [hidden]="!lecture.public">📕 {{lecture.title}}</a>
+          <a class="material-name" [hidden]= "lecture.public" style="opacity: 70%">📕 {{lecture.title}} (Скрыт)</a>
+          <a class="course-button" title="Удалить" (click)="deleteLecture(lecture.lectureId)">❌</a>
+          <a class="course-button">  </a>
+          <a class="course-button" title="Редактировать" (click)="editLecture(lecture.lectureId)">📝</a>
+          <a class="course-button">  </a>
+          <a class="course-button" title="Скрыть" [hidden]="!lecture.public" (click)="hideLecture(lecture.lectureId)">👁</a>
+          <a class="course-button" title="Опубликовать" [hidden]="lecture.public" (click)="showLecture(lecture.lectureId)">👁</a>
+        </div>
+    </div>
+
+    <!--Tests-->
+    <div class="section-container">
+      <a class="section-title">Тесты</a>
+      <a class="section-button" [hidden]="isInAddTestMode" title="Добавить" (click)="addTest()">➕</a>
+      <a class="section-button" [hidden]="!isInAddTestMode" title="Отменить" (click)="unaddTest()">🚫</a>
+    </div>
+      <!--test controls-->
+      <div class="add-material">
+      <div class="course-form" [hidden]="!isInAddTestMode" [formGroup]="formTest">
+        <a class="add-course-label" >Добавить тест</a>
+        <br class="add-course-label">
+        <input class="add-mat-input" id="testTitle" [(ngModel)]="test.title" formControlName="testTitle" maxlength = "60" autocomplete="off"
+               [ngClass] = "{'input-bad': testTitle?.errors && (testTitle?.dirty || testTitle?.touched)}" placeholder="Название">
+        <br>
+        <div *ngIf="testTitle?.errors?.['minlength'] && (testTitle?.dirty || testTitle?.touched)">
+          <div class = "hint">Используйте не менее 4 символов</div>
+        </div>
+        <div *ngIf="testTitle?.errors?.['required'] && (testTitle?.dirty || testTitle?.touched)">
+          <div class = "hint">Название не может быть пустым</div>
+        </div>
+        <br>
+        <div *ngIf="!formTest.valid">
+          <button class="button" (click)="createTest()" disabled>Добавить тест</button>
+        </div>
+        <div *ngIf="formTest.valid">
+          <button class="button" (click)="createTest()">Добавить тест</button>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="materials">
+        <div class = "mat" *ngFor="let test of course.tests">
+          <a class="material-name" [hidden]="!test.public">📄 {{test.title}}</a>
+          <a class="material-name" [hidden]= "test.public" style="opacity: 70%">📄 {{test.title}} (Скрыт)</a>
+          <a class="course-button" title="Удалить" (click)="deleteTest(test.testId)">❌</a>
+          <a class="course-button">  </a>
+          <a class="course-button" title="Редактировать" (click)="editTest(test.testId)">📝</a>
+          <a class="course-button">  </a>
+          <a class="course-button" title="Скрыть" [hidden]="!test.public" (click)="hideTest(test.testId)">👁</a>
+          <a class="course-button" title="Опубликовать" [hidden]="test.public" (click)="showTest(test.testId)">👁</a>
+        </div>
+    </div>
+  </div>
+</div>

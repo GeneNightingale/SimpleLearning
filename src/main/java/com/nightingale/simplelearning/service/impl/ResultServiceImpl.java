@@ -36,7 +36,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<Result> getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
+    public Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
         return resultDAO.getAllResultsByStudentAndTestId(studentId, testId);
     }
 

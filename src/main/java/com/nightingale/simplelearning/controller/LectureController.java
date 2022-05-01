@@ -37,6 +37,20 @@ public class LectureController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_public/{lecture_id}")
+    public ResponseEntity<?> makePublic(@PathVariable("lecture_id") BigInteger lectureId) {
+        lectureService.makePublic(lectureId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping("/make_private/{lecture_id}")
+    public ResponseEntity<?> makePrivate(@PathVariable("lecture_id") BigInteger lectureId) {
+        lectureService.makePrivate(lectureId);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/{lecture_id}")
     public ResponseEntity<?> updateLecture(@Valid @RequestBody Lecture lecture, @PathVariable("lecture_id") BigInteger id) {
         lectureService.update(id, lecture);

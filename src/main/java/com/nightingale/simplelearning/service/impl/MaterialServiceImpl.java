@@ -31,6 +31,16 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
+    public boolean makePublic(BigInteger materialId) {
+        return materialDAO.makePublic(materialId);
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger materialId) {
+        return materialDAO.makePrivate(materialId);
+    }
+
+    @Override
     public boolean save(Material material, BigInteger courseId) {
         return materialDAO.save(material, courseId);
     }

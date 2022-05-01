@@ -17,7 +17,8 @@ public class TestRowMapper implements RowMapper<Test> {
         test.setTestId(rs.getInt("testId"));
         test.setTitle(rs.getString("title"));
         test.setTime(rs.getInt("time"));
-        //TODO: DO SOMETHING ABOUT THE QUESTIONS
+        test.setCourseId(rs.getInt("courseId"));
+        test.setPublic(Boolean.parseBoolean(rs.getString("isPublic")));
 
         return test;
 

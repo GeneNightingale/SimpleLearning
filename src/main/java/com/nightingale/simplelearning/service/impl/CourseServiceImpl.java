@@ -22,7 +22,20 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourseById(BigInteger id) {
-        return courseDAO.getCourseById(id);
+        User currentUser = userService.getCurrentUser();
+        switch (currentUser.getRole().toString()) {
+            case "STUDENT":
+                return getCourseByIdStudent(id);
+            case "TEACHER":
+                return courseDAO.getCourseById(id);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Course getCourseByIdStudent(BigInteger id) {
+        return courseDAO.getCourseByIdStudent(id);
     }
 
     @Override
@@ -60,18 +73,51 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<User> getAllStudentsByCourseId(BigInteger id) {
-        return courseDAO.getAllStudentsByCourseId(id);
+        List<User> students = courseDAO.getAllStudentsByCourseId(id);
+        for (User student: students) {
+            student.setPassword("");
+        }
+        return students;
+    }
+
+    @Override
+    public List<User> getAllNotStudentsByCourseId(BigInteger id) {
+        List<User> students = courseDAO.getAllNotStudentsByCourseId(id);
+        for (User student: students) {
+            student.setPassword("");
+        }
+        return students;
     }
 
     @Override
     public boolean saveCourseAsCurrentTeacher(Course course) {
         User currentUser = userService.getCurrentUser();
         if ("TEACHER".equals(currentUser.getRole().toString())) {
-            course.setTeacher(currentUser);
+            course.setTeacherId(currentUser.getUserId());
             return save(course);
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean addCourseMember(BigInteger courseId, BigInteger studentId) {
+        return courseDAO.addCourseMember(courseId, studentId);
+    }
+
+    @Override
+    public boolean removeCourseMember(BigInteger courseId, BigInteger studentId) {
+        return courseDAO.removeCourseMember(courseId, studentId);
+    }
+
+    @Override
+    public boolean makePublic(BigInteger courseId) {
+        return courseDAO.makePublic(courseId);
+    }
+
+    @Override
+    public boolean makePrivate(BigInteger courseId) {
+        return courseDAO.makePrivate(courseId);
     }
 
     @Override

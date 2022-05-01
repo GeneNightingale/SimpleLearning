@@ -1,0 +1,90 @@
+<div id="main">
+
+  <!--Lecture controls-->
+  <div class="test">
+    <div class="login-form" [formGroup]="formTest">
+      <div class="test-container">
+        <input id="title" [hidden]="!isInEditMode" [(ngModel)]="testModel.title" formControlName="title" maxlength = "60" autocomplete="off"
+               [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" [value]="test.title">
+        <a class="test-title" [hidden]="isInEditMode">{{test.title}}</a>
+        <a class="test-title" [hidden]="isInEditMode || test.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
+        <a class="test-button" title="Отменить" [hidden]="!isInEditMode" (click)="uneditTest()">🚫</a>
+        <a class="test-button" title="Редактировать" [hidden]="isInEditMode" (click)="editTest()">📝</a>
+        <a class="test-button">  </a>
+        <a class="test-button" title="Сохранить" (click)="submitTest()">✔</a>
+      </div>
+      <div class="part-of">
+        <a>Часть курса: </a>
+        <a [routerLink]="['/course-teacher/'+test.courseId]"> {{courseTitle}}</a>
+      </div>
+    </div>
+  </div>
+
+  <!--HERE ARE THE QUESTION CONTROLS-->
+
+  <div class="test-content">
+    <div class="test-container">
+      <div class="test-container">
+        <a class="current-page" style="float: left">Время на выполнение: </a>
+        <input id="time" class="form-control" type="number" min="1" max="10080" step="1" [value]="testModel.time" style="width: 15%">
+      </div>
+      <div class="test-container">
+      <a class="current-page" style="float: left">Вопрос: </a>
+      <select id="pages" class="form-control" (ngModelChange)="pickedOption($event.target)" [(ngModel)]="currentQuestion">
+        <option *ngFor="let question of questionsModel" [value]="question.questionNum">
+          {{question.questionNum}}. {{question.text}}
+        </option>
+      </select>
+      <a class="course-button" [hidden]= "questionsModel.length <2" title="Удалить" (click)="deleteCurrentPage()">❌</a>
+      <a class="course-button" title="Добавить" (click)="addQuestion()">➕</a>
+      <a class="course-button" title="Сохранить" (click)="saveQuestion()">✔</a>
+      <textarea id="description" [(ngModel)]="questionsModel[currentQuestion-1].text" maxlength = "2048" type="text"
+                #textarea [scrollTop]="1 -textarea.scrollHeight"></textarea>
+      </div>
+
+      <div class="answers-line">
+          <a class="answers-label">Ответы на вопрос:</a>
+          <a class="course-button" title="Добавить ответ" [hidden]="isInAddAnswerMode" (click)="addAnswerMode()">➕</a>
+          <a class="course-button" title="Добавить ответ" [hidden]="!isInAddAnswerMode" (click)="unaddAnswerMode()">🚫</a>
+        </div>
+
+      <div class="add-answer">
+        <div class="course-form" [hidden]="!isInAddAnswerMode" [formGroup]="formAnswer">
+          <a class="add-course-label" >Добавить вариант ответа</a>
+          <br class="add-course-label">
+          <input class="add-answer-input" id="answer" [(ngModel)]="answerModel.answer" formControlName="answer" maxlength = "120" autocomplete="off"
+                 [ngClass] = "{'input-bad': answer?.errors && (answer?.dirty || answer?.touched)}" placeholder="Вариант ответа">
+          <br>
+          <div *ngIf="answer?.errors?.['minlength'] && (answer?.dirty || answer?.touched)">
+            <div class = "hint">Используйте не менее 4 символов</div>
+          </div>
+          <div *ngIf="answer?.errors?.['required'] && (answer?.dirty || answer?.touched)">
+            <div class = "hint">Вариант ответа не может быть пустым</div>
+          </div>
+          <br>
+          <div *ngIf="!formAnswer.valid">
+            <button class="button" (click)="addAnswerToQuestion()" disabled>Добавить вариант ответа</button>
+          </div>
+          <div *ngIf="formAnswer.valid">
+            <button class="button" (click)="addAnswerToQuestion()">Добавить вариант ответа</button>
+          </div>
+          <br>
+        </div>
+      </div>
+      <form>
+        <div class="radio-line" *ngFor="let answer of questionsModel[currentQuestion-1].answers">
+          <input class="radio-circle" type="radio" id="{{answer.answerId}}" name="answer" value="{{answer.answer}}"
+                 (change)="pickedAnswer($event.target)" [checked]="answer.answer === questionsModel[currentQuestion-1].answer">
+          <label class="radio-label" for="{{answer.answerId}}">{{answer.answer}}</label>
+          <a class="course-button" title="Удалить" (click)="deleteAnswer(answer.answerId)">❌</a>
+        </div>
+        <p class="answers-label">Верный ответ: {{questionsModel[currentQuestion-1].answer}}</p>
+      </form>
+
+      <div class="page-buttons">
+        <button name="submit" [disabled]= "currentQuestion === questionsModel.length" class="action_btn" type="submit" (click)="nextQuestion()">Следующий вопрос</button>
+        <button name="submit" [disabled]= "currentQuestion <2" class="action_btn" type="submit" (click)="prevQuestion()">Предыдущий вопрос</button>
+      </div>
+    </div>
+  </div>
+</div>

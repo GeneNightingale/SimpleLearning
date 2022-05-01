@@ -33,13 +33,16 @@ public interface ResultDAO {
 
     static final String SELECT_TEST_BY_ID = "SELECT * FROM test WHERE testId = ?";
 
-    String GET_USER_BY_ID = "SELECT * from user where userId = ?;";
+    String GET_USER_BY_ID = "SELECT user.userId, user.name, user.login, user.password, role.roleName " +
+            "from user " +
+            "INNER JOIN role on user.roleId = role.roleId " +
+            "where userId = ?;";
 
 
     Result getResultById(BigInteger id);
     List<Result> getAllResultsByTestId(BigInteger testId);
     List<Result> getAllResultsByStudentId(BigInteger studentId);
-    List<Result> getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId);
+    Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId);
     List<Result> getAllResults();
     boolean deleteAllResultsByTestId(BigInteger id);
     //boolean deleteAllResultsByStudentId(BigInteger id); //TODO: Implement in case of adding student deletion

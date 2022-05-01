@@ -13,6 +13,8 @@ public interface TestService {
     List<Test> getAllTests();
     //boolean deleteAllTestsByCourseId(BigInteger id);
     boolean completeTest(RequestTest requestTest, BigInteger testId);
+    boolean makePublic(BigInteger testId);
+    boolean makePrivate(BigInteger testId);
     boolean save(Test test, BigInteger courseId);
     boolean delete(BigInteger id);
     boolean update(BigInteger id, Test newTest);

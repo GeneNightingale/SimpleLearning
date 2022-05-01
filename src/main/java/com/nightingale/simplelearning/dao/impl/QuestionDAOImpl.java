@@ -68,8 +68,13 @@ public class QuestionDAOImpl implements QuestionDAO {
     @Override
     public boolean deleteAllQuestionsByTestId(BigInteger id) {
         try {
-            jdbcTemplate.update(DELETE_QUESTIONS_BY_TEST_ID, id);
-            return true;
+            List<Question> questions = this.getAllQuestionsByTestId(id);
+            int count = 0;
+            for (Question question : questions) {
+                if (this.delete(BigInteger.valueOf(question.getQuestionId())))
+                    count++;
+            }
+            return count == questions.size();
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -85,7 +90,7 @@ public class QuestionDAOImpl implements QuestionDAO {
             return false;
         }
         try {
-            jdbcTemplate.update(INSERT_QUESTION_TO_TEST, question.getText(), question.getAnswer(), testId);
+            jdbcTemplate.update(INSERT_QUESTION_TO_TEST, question.getQuestionNum(), question.getText(), question.getAnswer(), testId);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -129,7 +134,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         try {
             Question question = jdbcTemplate.queryForObject(SELECT_QUESTION_BY_ID, questionRowMapper, id);
             if (question!=null) {
-                jdbcTemplate.update(UPDATE_QUESTION_BY_ID, newQuestion.getText(), newQuestion.getAnswer(), id);
+                jdbcTemplate.update(UPDATE_QUESTION_BY_ID, newQuestion.getQuestionNum(), newQuestion.getText(), newQuestion.getAnswer(), id);
                 //I DONT THINK I NEED TO UPDATE ALL ANSWER IDS FORTUNATELY
                 return true;
             } else {

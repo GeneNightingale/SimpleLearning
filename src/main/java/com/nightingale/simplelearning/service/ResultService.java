@@ -9,7 +9,7 @@ public interface ResultService {
     Result getResultById(BigInteger id);
     List<Result> getAllResultsByTestId(BigInteger testId);
     List<Result> getAllResultsByStudentId(BigInteger studentId);
-    List<Result> getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId);
+    Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId);
     List<Result> getAllResults();
     boolean deleteAllResultsByTestId(BigInteger id);
     //boolean deleteAllResultsByStudentId(BigInteger id);

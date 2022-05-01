@@ -17,6 +17,7 @@ public class MaterialRowMapper implements RowMapper<Material> {
         material.setMaterialId(rs.getInt("materialId"));
         material.setTitle(rs.getString("title"));
         material.setLink(rs.getString("link"));
+        material.setPublic(Boolean.parseBoolean(rs.getString("isPublic")));
         return material;
 
     }

@@ -65,9 +65,13 @@ public class ResultDAOImpl implements ResultDAO {
     }
 
     @Override
-    public List<Result> getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
+    public Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
         try {
-            return jdbcTemplate.query(SELECT_RESULTS_BY_STUDENT_AND_TEST_ID, resultRowMapper, studentId, testId);
+            List<Result> results = jdbcTemplate.query(SELECT_RESULTS_BY_STUDENT_AND_TEST_ID, resultRowMapper, studentId, testId);
+            if (results.isEmpty())
+                return null;
+            else
+                return results.get(0);
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             return null;

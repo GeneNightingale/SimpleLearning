@@ -19,7 +19,7 @@ public class Course {
     private String title;
 
     //@NotNull
-    private User teacher;
+    private long teacherId;
 
     private String description;
 
@@ -32,6 +32,8 @@ public class Course {
     private List<Test> tests;
 
     private List<Appeal> appeals;
+
+    private boolean isPublic;
 
     public long getCourseId() {
         return courseId;
@@ -49,12 +51,12 @@ public class Course {
         this.title = title;
     }
 
-    public User getTeacher() {
-        return teacher;
+    public long getTeacherId() {
+        return teacherId;
     }
 
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getDescription() {
@@ -105,6 +107,14 @@ public class Course {
         this.appeals = appeals;
     }
 
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,33 +122,35 @@ public class Course {
         Course course = (Course) o;
         return Objects.equals(getCourseId(), course.getCourseId())
                 && Objects.equals(getTitle(), course.getTitle())
-                && Objects.equals(getTeacher(), course.getTeacher())
+                && Objects.equals(getTeacherId(), course.getTeacherId())
                 && Objects.equals(getDescription(), course.getDescription())
                 && Objects.equals(getStudents(), course.getStudents())
                 && Objects.equals(getMaterials(), course.getMaterials())
                 && Objects.equals(getLectures(), course.getLectures())
                 && Objects.equals(getTests(), course.getTests())
-                && Objects.equals(getAppeals(), course.getAppeals());
+                && Objects.equals(getAppeals(), course.getAppeals())
+                && Objects.equals(isPublic(), course.isPublic());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCourseId(), getTitle(), getTeacher(), getDescription(),
-                getStudents(), getMaterials(), getLectures(), getTests(), getAppeals());
+        return Objects.hash(getCourseId(), getTitle(), getTeacherId(), getDescription(),
+                getStudents(), getMaterials(), getLectures(), getTests(), getAppeals(), isPublic());
     }
 
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + courseId +
-                ", title='" + title + '\'' +
-                ", teacher=" + teacher +
+                ", title='" + title +
+                ", teacherId=" + teacherId +
                 ", description=" + description +
                 ", students=" + students +
                 ", materials=" + materials +
                 ", lectures=" + lectures +
                 ", tests=" + tests +
                 ", appeals=" + appeals +
+                ", isPublic=" + isPublic +
                 '}';
     }
 }

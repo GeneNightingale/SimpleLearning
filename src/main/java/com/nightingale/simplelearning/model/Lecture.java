@@ -17,6 +17,10 @@ public class Lecture {
 
     private List<Page> pages;
 
+    private long courseId;
+
+    private boolean isPublic;
+
     public long getLectureId() {
         return lectureId;
     }
@@ -41,6 +45,22 @@ public class Lecture {
         this.pages = pages;
     }
 
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,20 +69,24 @@ public class Lecture {
         Lecture lecture = (Lecture) o;
         return Objects.equals(getLectureId(), lecture.getLectureId()) &&
                 Objects.equals(getTitle(), lecture.getTitle()) &&
-                Objects.equals(getPages(), lecture.getPages());
+                Objects.equals(getPages(), lecture.getPages()) &&
+                Objects.equals(getCourseId(), lecture.getCourseId()) &&
+                Objects.equals(isPublic(), lecture.isPublic());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLectureId(), getTitle(), getPages());
+        return Objects.hash(getLectureId(), getTitle(), getPages(), getCourseId(), isPublic());
     }
 
     @Override
     public String toString() {
         return "Lecture{" +
                 "id=" + lectureId +
-                ", title='" + title + '\'' +
+                ", title='" + title +
                 ", pages=" + pages +
+                ", courseId=" + courseId +
+                ", isPublic=" + isPublic +
                 '}';
     }
 }

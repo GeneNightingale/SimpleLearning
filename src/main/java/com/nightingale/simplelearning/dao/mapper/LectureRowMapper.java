@@ -16,7 +16,8 @@ public class LectureRowMapper implements RowMapper<Lecture> {
 
         lecture.setLectureId(rs.getInt("lectureId"));
         lecture.setTitle(rs.getString("title"));
-        //TODO: DO SOMETHING ABOUT THE PAGES
+        lecture.setCourseId(rs.getInt("courseId"));
+        lecture.setPublic(Boolean.parseBoolean(rs.getString("isPublic")));
 
         return lecture;
 
