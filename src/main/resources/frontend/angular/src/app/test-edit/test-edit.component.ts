@@ -52,7 +52,7 @@ export class TestEditComponent implements OnInit {
   isInAddAnswerMode: boolean = false;
 
   formAnswer: FormGroup = new FormGroup({
-    answer: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(120)]),
+    answer: new FormControl('', [Validators.required, Validators.maxLength(120)]),
   });
   get answer() {
     return this.formAnswer.get('answer');

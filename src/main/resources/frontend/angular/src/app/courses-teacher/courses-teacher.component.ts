@@ -88,6 +88,10 @@ export class CoursesTeacherComponent implements OnInit {
     this.router.navigate(['/course-members/' + courseId]);
   }
 
+  getCoursePerformance(courseId: any) {
+    this.router.navigate(['/course-performance/' + courseId]);
+  }
+
   editCourse(courseId: number) {
     this.router.navigate(['/course-teacher/' + courseId]);
   }

@@ -1,0 +1,98 @@
+* {
+  color:  black;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: "Segoe UI", serif;
+  font-size: 1.2vw;
+}
+
+#main {
+  position: relative;
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  border-radius: 1em;
+  padding-bottom: 2vw;
+  margin-bottom: 2vw;
+}
+
+.course-title{
+  padding-top: 1vw;
+  padding-bottom: 0.5vw;
+  width: 100%;
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
+  font-size: 2vw;
+  float: left;
+}
+
+.member-title{
+  padding-top: 1vw;
+  padding-bottom: 0.5vw;
+  width: 100%;
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 1.6vw;
+  float: left;
+}
+
+.course {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: left;
+}
+
+.student-button{
+  font-size: 1.5vw;
+  float: right;
+  cursor: pointer;
+}
+
+.student-score{
+  font-size: 1.5vw;
+  float: right;
+  padding-right: 1%;
+}
+
+.student {
+  float: left;
+  width: 100%;
+  padding: 1.5% 1.2%;
+}
+
+.student-red {
+  float: left;
+  width: 100%;
+  border-radius: 0.2em;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.student-name {
+  font-size: 1.5vw;
+  padding-left: 1%;
+  /*margin-left: 1.5%;*/
+  float: left;
+}
+
+.course button{
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  float: right;
+  border-radius: 0.2em;
+  font-size: 1.3vw;
+}
+
+button {
+  color:  black;
+  background: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  cursor:pointer;
+}
+
+button:hover{
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 1.4vw;
+}

@@ -7,6 +7,8 @@
       <a class="course-title" [hidden]="course.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
       <a class="course-button" title="Удалить" (click)="deleteCourse(course.courseId)">❌</a>
       <a class="course-button">  </a>
+      <a class="course-button" title="Успеваемость" (click)="getCoursePerformance(course.courseId)">📑</a>
+      <a class="course-button">  </a>
       <a class="course-button" title="Студенты" (click)="getCourseStudents(course.courseId)">👨‍🎓</a>
       <a class="course-button">  </a>
       <a class="course-button" title="Редактировать" (click)="editCourse(course.courseId)">📝</a>

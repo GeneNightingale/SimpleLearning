@@ -15,6 +15,13 @@ public interface ResultDAO {
 
     static final String SELECT_RESULTS_BY_STUDENT_AND_TEST_ID = "SELECT * FROM result WHERE userId = ? AND testId = ?";
 
+    static final String SELECT_FULL_RESULTS_BY_STUDENT_AND_TEST_ID = "SELECT result.resultId, test.testId, test.title, " +
+            "user.userId, user.name, result.score " +
+            "FROM result " +
+            "JOIN USER ON user.userId = result.userId " +
+            "JOIN TEST ON test.testId = result.testId " +
+            "WHERE user.userId = ? AND test.testId = ?";
+
     static final String SELECT_ALL_RESULTS = "SELECT * FROM result";
 
     static final String INSERT_RESULT = "INSERT INTO result (score, testId, userId) " +

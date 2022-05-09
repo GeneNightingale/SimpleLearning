@@ -1,6 +1,7 @@
 package com.nightingale.simplelearning.dao.impl;
 
 import com.nightingale.simplelearning.dao.*;
+import com.nightingale.simplelearning.dao.mapper.ResultFullRowMapper;
 import com.nightingale.simplelearning.dao.mapper.ResultRowMapper;
 import com.nightingale.simplelearning.dao.mapper.TestRowMapper;
 import com.nightingale.simplelearning.dao.mapper.UserRowMapper;
@@ -25,6 +26,9 @@ public class ResultDAOImpl implements ResultDAO {
 
     @Autowired
     private ResultRowMapper resultRowMapper;
+
+    @Autowired
+    private ResultFullRowMapper resultFullRowMapper;
 
     @Autowired
     private TestRowMapper testRowMapper;
@@ -67,7 +71,7 @@ public class ResultDAOImpl implements ResultDAO {
     @Override
     public Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId) {
         try {
-            List<Result> results = jdbcTemplate.query(SELECT_RESULTS_BY_STUDENT_AND_TEST_ID, resultRowMapper, studentId, testId);
+            List<Result> results = jdbcTemplate.query(SELECT_FULL_RESULTS_BY_STUDENT_AND_TEST_ID, resultFullRowMapper, studentId, testId);
             if (results.isEmpty())
                 return null;
             else

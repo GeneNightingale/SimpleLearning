@@ -114,6 +114,10 @@ export class CourseTeacherComponent implements OnInit {
     this.router.navigate(['/course-members/' + courseId]);
   }
 
+  getCoursePerformance(courseId: any) {
+    this.router.navigate(['/course-performance/' + courseId]);
+  }
+
   ngOnInit(): void {
     this.getCourse();
     this.initializeUser();

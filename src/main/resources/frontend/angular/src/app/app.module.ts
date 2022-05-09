@@ -23,6 +23,8 @@ import { CourseTeacherComponent } from './course-teacher/course-teacher.componen
 import { LectureEditComponent } from './lecture-edit/lecture-edit.component';
 import { TestEditComponent } from './test-edit/test-edit.component';
 import { TestComponent, FormatTimePipe } from './test/test.component';
+import { CoursePerformanceComponent } from './course-performance/course-performance.component';
+import { StudentPerformanceComponent } from './student-performance/student-performance.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { TestComponent, FormatTimePipe } from './test/test.component';
     LectureEditComponent,
     TestEditComponent,
     TestComponent,
-    FormatTimePipe
+    FormatTimePipe,
+    CoursePerformanceComponent,
+    StudentPerformanceComponent
   ],
   imports: [
     BrowserModule,

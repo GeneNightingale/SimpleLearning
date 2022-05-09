@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
+@Deprecated
 @RestController
 @RequestMapping(value = "/api/appeal")
 public class AppealController {
@@ -40,7 +41,6 @@ public class AppealController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    //TODO: Change perms here
     @GetMapping("/{appeal_id}")
     public Appeal getAppeal(@PathVariable("appeal_id") BigInteger id) {
         return appealService.getAppealById(id);

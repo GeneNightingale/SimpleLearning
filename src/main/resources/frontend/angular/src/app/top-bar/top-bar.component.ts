@@ -71,6 +71,10 @@ export class TopBarComponent implements OnInit {
     this.curUser = this.tokenStorage.getUser().userName;
   }
 
+  openStudentPerformance() {
+    this.router.navigate(['/student-performance/' + this.tokenStorage.getUser().userId]);
+  }
+
   logOut() {
     this.tokenStorage.signOut();
     this.dataSharingService.isLoggedIn.next(false);

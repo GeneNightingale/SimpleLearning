@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Deprecated
 @Component
 public class AppealRowMapper implements RowMapper<Appeal> {
 

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Deprecated
 @Repository
 public class AppealDAOImpl implements AppealDAO {
 
@@ -23,12 +24,6 @@ public class AppealDAOImpl implements AppealDAO {
 
     @Autowired
     private AppealRowMapper appealRowMapper;
-/*
-    @Autowired
-    private CourseDAO courseDAO;
-
-    @Autowired
-    private CourseListRowMapper courseListRowMapper;*/
 
     private static final Logger LOGGER = Logger.getLogger(AppealDAOImpl.class.getName());
 

@@ -113,7 +113,7 @@ public class CourseController {
     //Mostly useless stuff down below
     //
 
-    //TODO: Change perms
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Course> getAllCourses() {
         return courseService.getAllCourses();

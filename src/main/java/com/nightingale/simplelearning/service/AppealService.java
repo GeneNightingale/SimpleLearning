@@ -5,6 +5,7 @@ import com.nightingale.simplelearning.model.Appeal;
 import java.math.BigInteger;
 import java.util.List;
 
+@Deprecated
 public interface AppealService {
     public Appeal getAppealById(BigInteger id);
     public List<Appeal> getAllAppeals();

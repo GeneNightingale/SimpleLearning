@@ -6,13 +6,13 @@
       <div class="centred-part">
 
         <ng-template [ngIf]="isAdmin">
-          <li class="top-bar"><a (click)="nothing()" >Панель админа</a></li>
+          <li class="top-bar"></li><li class="top-bar"></li>
         </ng-template>
         <ng-template [ngIf]="isTeacher">
-          <li class="top-bar"><a (click)="nothing()">Панель учителя</a></li>
+          <li class="top-bar"><a (click)="openHomePage()">Мои курсы</a></li>
         </ng-template>
         <ng-template [ngIf]="isStudent">
-          <li class="top-bar"><a (click)="nothing()">Панель студента</a></li>
+          <li class="top-bar"><a (click)="openStudentPerformance()">Моя успеваемость</a></li>
         </ng-template>
 
         <!--Placeholder for a potential another button-->
@@ -47,35 +47,3 @@
     </ng-template>
   </ul>
 </div>
-
-<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a (click)="openHomePage()" ><img [src]="'../../assets/logo.png'" alt="logo"></a>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-
-        <ng-template [ngIf]="isAdmin" [ngIfElse]="userView">
-          <a class="nav-link" (click)="nothing()">Панель админа</a>
-        </ng-template>
-        <ng-template #userView>
-          <a class="nav-link" (click)="nothing()">Панель не админа</a>
-        </ng-template>
-
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" (click)="nothing()">Пункт</a>
-      </li>
-    </ul>
-
-    <form class="form-inline my-2 my-lg-2">
-      <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
-        <a class="nav-link" href="#">🎓{{this.curUser}}</a>
-        <a class="nav-link" (click)="logOut()">Выйти</a>
-      </ng-template>
-      <ng-template #loggedOut>
-        <a class="nav-link" (click)="openAuthorization()">Вход</a>
-      </ng-template>
-    </form>
-  </div>
-</nav>-->

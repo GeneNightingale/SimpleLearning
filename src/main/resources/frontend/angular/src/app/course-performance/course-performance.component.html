@@ -1,0 +1,29 @@
+<div id="main">
+
+  <div class="course">
+    <a class="course-title" [routerLink]="['/course-teacher/'+course.courseId]">{{course.title}}</a>
+
+    <!--In here list all member students-->
+
+
+    <div class="member-title" *ngFor="let test of testResults"> 📝 {{test.name}}
+      <div class="student" *ngFor="let mark of test.marks">
+        <div class="student-red" *ngIf="mark.score === -1">
+          <a class="student-name">🎓 {{mark.name}}</a>
+          <a class="student-score">НЕ ПРОЙДЕН</a>
+        </div>
+        <a class="student-name" *ngIf="mark.score > -1">🎓 {{mark.name}}</a>
+        <a class="student-score" *ngIf="mark.score > -1">{{mark.score}}%</a>
+      </div>
+    </div>
+    <div class="member-title"> Итоги:
+      <div class="student" *ngFor="let mark of marks">
+        <a class="student-name">🎓 {{mark.student}}</a>
+        <a class="student-score">{{mark.score/testResults.length}}%</a>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

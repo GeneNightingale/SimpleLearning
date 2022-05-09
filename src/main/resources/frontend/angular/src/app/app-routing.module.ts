@@ -13,6 +13,8 @@ import {CourseTeacherComponent} from "./course-teacher/course-teacher.component"
 import {LectureEditComponent} from "./lecture-edit/lecture-edit.component";
 import {TestEditComponent} from "./test-edit/test-edit.component";
 import {TestComponent} from "./test/test.component";
+import { CoursePerformanceComponent } from './course-performance/course-performance.component';
+import {StudentPerformanceComponent} from "./student-performance/student-performance.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -28,6 +30,8 @@ const routes: Routes = [
   {path: 'test-edit/:testId', component: TestEditComponent },
   {path: 'course-members/:courseId', component: CourseMembersComponent },
   {path: 'course-teacher/:courseId', component: CourseTeacherComponent },
+  {path: 'course-performance/:courseId', component: CoursePerformanceComponent },
+  {path: 'student-performance/:userId', component: StudentPerformanceComponent },
   {path: '**', component: NotFoundComponent}
 ];
 

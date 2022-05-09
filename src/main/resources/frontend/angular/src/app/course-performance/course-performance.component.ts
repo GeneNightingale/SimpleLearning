@@ -11,13 +11,17 @@ import {CoursesService} from "../service/courses.service";
 import {UserService} from "../service/user.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {StudentMembershipService} from "../service/student-membership";
+import {Mark} from "../entities/mark";
+import {TestService} from "../service/test.service";
+import {TestResults} from "../entities/testResults";
+import {Result} from "../entities/result";
 
 @Component({
-  selector: 'app-course-members',
-  templateUrl: './course-members.component.html',
-  styleUrls: ['./course-members.component.css']
+  selector: 'app-course-performance',
+  templateUrl: './course-performance.component.html',
+  styleUrls: ['./course-performance.component.css']
 })
-export class CourseMembersComponent implements OnInit {
+export class CoursePerformanceComponent implements OnInit {
 
   public course: Course = {
     courseId: 0,
@@ -38,7 +42,8 @@ export class CourseMembersComponent implements OnInit {
               private router: Router, private activateRoute: ActivatedRoute,
               private dataSharingService: DataSharingService, private appearanceService: AppearanceService,
               private coursesService: CoursesService, private userService: UserService,
-              private studentMembershipService : StudentMembershipService) {
+              private studentMembershipService : StudentMembershipService,
+              private testService : TestService) {
     this.subscription = activateRoute.params.subscribe(params=>this.course.courseId=params['courseId']);
     this.dataSharingService.isLoggedIn.subscribe( value => {
       this.isLoggedIn = value;
@@ -46,14 +51,15 @@ export class CourseMembersComponent implements OnInit {
   }
 
   public memberStudents: User[] = [];
-  public notMemberStudents: User[] = [];
+
+  public marks: Mark[] = [];
+  public testResults: TestResults[] = [];
 
   public getCourse(): void {
     this.coursesService.getCourse(this.course.courseId).subscribe(
       (response: Course) => {
         this.course = response;
         this.getMemberStudents(this.course.courseId);
-        this.getNotMemberStudents(this.course.courseId);
       }
     );
   }
@@ -62,17 +68,15 @@ export class CourseMembersComponent implements OnInit {
     this.userService.getMemberStudents(courseId).subscribe(
       (response: User[]) => {
         this.memberStudents = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-  }
-
-  public getNotMemberStudents(courseId : number): void {
-    this.userService.getNotMemberStudents(courseId).subscribe(
-      (response: User[]) => {
-        this.notMemberStudents = response;
+        let countTests = 0;
+        this.course.tests?.forEach(test => {
+          this.testService.getResultsByTestId(test.testId).subscribe(
+              (response: Result[]) => {
+                this.testResults.push({name: test.title, marks: response})
+                this.calculateScores(countTests);
+                countTests++;
+              })
+        })
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -95,34 +99,25 @@ export class CourseMembersComponent implements OnInit {
     return this.tokenStorage.getUser().name;
   }
 
-  addToCourse(studentId: any) {
-    if(confirm("Точно дать этому студенту доступ к курсу?")) {
-      this.studentMembershipService.addMemberToCourse(this.course.courseId, studentId).subscribe(
-        data => {
-          this.reloadPage();
-        },
-        err => {
-          console.log("Failed at adding a member of ID " + studentId + " to course by ID " + this.course.courseId);
-        }
+  calculateScores(countTests: number) : void {
+    if (countTests === 0)
+      this.memberStudents.forEach(student =>
+        this.marks.push({
+          student: "",
+          score: 0})
       );
-    }
-  }
-
-  removeFromCourse(studentId: any) {
-    if(confirm("Точно снять этого студента с курса? Это также сотрёт всю его успеваемость по этому курсу!")) {
-      this.studentMembershipService.removeMemberFromCourse(this.course.courseId, studentId).subscribe(
-        data => {
-          this.reloadPage();
-        },
-        err => {
-          console.log("Failed at removing a member of ID " + studentId + " from course by ID " + this.course.courseId);
-        }
-      );
-    }
+    console.log(this.marks);
+    let count = 0;
+      this.testResults[countTests].marks.forEach(mark => {
+        this.marks[count].student = mark.name;
+        if (mark.score !== -1)
+          this.marks[count].score = this.marks[count].score + mark.score;
+        count++;
+      })
   }
 
   openReportOnStudent(studentId: any) {
-    this.router.navigate(['/student-performance/' + studentId]);
+    //TODO: Open report with student's results from this course or your courses in general once that's implemented
   }
 
   reloadPage() : void {

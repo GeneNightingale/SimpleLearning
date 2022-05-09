@@ -55,9 +55,6 @@
           <input class="add-answer-input" id="answer" [(ngModel)]="answerModel.answer" formControlName="answer" maxlength = "120" autocomplete="off"
                  [ngClass] = "{'input-bad': answer?.errors && (answer?.dirty || answer?.touched)}" placeholder="Вариант ответа">
           <br>
-          <div *ngIf="answer?.errors?.['minlength'] && (answer?.dirty || answer?.touched)">
-            <div class = "hint">Используйте не менее 4 символов</div>
-          </div>
           <div *ngIf="answer?.errors?.['required'] && (answer?.dirty || answer?.touched)">
             <div class = "hint">Вариант ответа не может быть пустым</div>
           </div>

@@ -5,6 +5,7 @@ import com.nightingale.simplelearning.model.Appeal;
 import java.math.BigInteger;
 import java.util.List;
 
+@Deprecated
 public interface AppealDAO {
 
     String SELECT_APPEAL_BY_ID = "SELECT * FROM appeal WHERE appealId = ?;";

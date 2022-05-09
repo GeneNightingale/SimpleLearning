@@ -8,6 +8,7 @@ import java.util.List;
 public interface ResultService {
     Result getResultById(BigInteger id);
     List<Result> getAllResultsByTestId(BigInteger testId);
+    List<Result> getAllResultsByCourseAndStudent(BigInteger courseId, BigInteger studentId);
     List<Result> getAllResultsByStudentId(BigInteger studentId);
     Result getAllResultsByStudentAndTestId(BigInteger studentId, BigInteger testId);
     List<Result> getAllResults();

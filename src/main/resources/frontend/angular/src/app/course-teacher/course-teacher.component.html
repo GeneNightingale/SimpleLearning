@@ -8,7 +8,9 @@
              [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" [value]="course.title">
       <a class="course-title" [hidden]="isInEditMode">{{course.title}}</a>
       <a class="course-title" [hidden]="isInEditMode || course.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
-      <a class="course-button" [hidden]="isInEditMode">  </a>
+      <!--<a class="course-button" [hidden]="isInEditMode">  </a>-->
+      <a class="course-button" title="Успеваемость" (click)="getCoursePerformance(course.courseId)">📑</a>
+      <a class="course-button">  </a>
       <a class="course-button" title="Студенты" (click)="getCourseStudents(course.courseId)">👨‍🎓</a>
       <a class="course-button">  </a>
       <a class="course-button" title="Отменить" [hidden]="!isInEditMode" (click)="uneditCourse()">🚫</a>

@@ -35,7 +35,7 @@ li.top-bar{
 }
 
 li.title{
-  padding-right: 26vw;
+  padding-right: 6vw;
 }
 
 .exit-bar {
@@ -47,12 +47,8 @@ li.title{
 }
 
 div.centred-part{
-  padding-right: 6vw;
+  padding-right: 26vw;
   align-self: center;
   float: left;
 }
 
-/*div.right-part{
-  padding-right: 6vw;
-  align-self: end;
-}*/

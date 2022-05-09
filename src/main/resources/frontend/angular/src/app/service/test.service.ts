@@ -7,6 +7,8 @@ import {Answer} from "../entities/answer";
 import {TestModel} from "../model/testModel";
 import {QuestionModel} from "../model/questionModel";
 import {TestResultModel} from "../model/testResultModel";
+import {Mark} from "../entities/mark";
+import {Result} from "../entities/result";
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +80,18 @@ export class TestService {
 
   public completeTest(testResultModel: TestResultModel): Observable<void> {
     return this.http.post<void>(`${this.apiServerUrl}/test/complete_test/${testResultModel.testId}`, testResultModel);
+  }
+
+  public getResultByUserAndTest(userId : number, testId: number): Observable<Result> {
+    return this.http.post<Result>(`${this.apiServerUrl}/result/by_student_and_test`, {studentId: userId, testId: testId});
+  }
+
+  public getResultsByTestId(testId: number): Observable<Result[]> {
+    return this.http.get<Result[]>(`${this.apiServerUrl}/result/by_test/${testId}`);
+  }
+
+  public getMyResultsByCourseId(courseId: number, studentId: number): Observable<Result[]> {
+    return this.http.get<Result[]>(`${this.apiServerUrl}/result/by_course/${courseId}/${studentId}`);
   }
 
 }

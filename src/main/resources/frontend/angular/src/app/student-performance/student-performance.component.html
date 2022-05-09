@@ -1,0 +1,27 @@
+<div id="main">
+
+  <div class="performance">
+    <a class="student-title">🎓 {{getCurrentUser()}}</a>
+
+    <!--Student's courses, tests and their results-->
+
+    <div class="member-title" *ngFor="let course of courseResults">
+      <a class="course-title" [hidden]="!isStudent" [routerLink]="['/course/'+course.courseId]">{{course.name}}</a>
+      <a class="course-title" [hidden]="isStudent" [routerLink]="['/course-teacher/'+course.courseId]">{{course.name}}</a>
+      <div class="student" *ngIf="course.marks.length === 0">
+        <a class="test-name">Этот курс не имеет тестов</a>
+        <a class="test-score"> </a>
+      </div>
+      <div class="student" *ngFor="let mark of course.marks">
+        <div class="test-red" *ngIf="mark.score === -1">
+          <a class="test-name">📝 {{mark.title}}</a>
+          <a class="test-score">НЕ ПРОЙДЕН</a>
+        </div>
+        <a class="test-name" *ngIf="mark.score > -1">📝 {{mark.title}}</a>
+        <a class="test-score" *ngIf="mark.score > -1">{{mark.score}}%</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
