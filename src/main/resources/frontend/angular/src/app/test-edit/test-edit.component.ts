@@ -187,8 +187,8 @@ export class TestEditComponent implements OnInit {
     var emptyQuestion : QuestionModel = {
       questionId: 0,
       questionNum: 1,
-      text: "Текст вопроса",
-      answer: "Верный ответ",
+      text: "Текст питання",
+      answer: "Вірна відповідь",
       answers: []
     }
     this.testService.addQuestion(this.test.testId, emptyQuestion).subscribe(
@@ -204,11 +204,11 @@ export class TestEditComponent implements OnInit {
   createEmptyAnswers(questionId: number, amount: number) {
     var answer1 : Answer = {
       answerId: 0,
-      answer: "Верный ответ"
+      answer: "Вірна відповідь"
     }
     var answer2 : Answer = {
       answerId: 0,
-      answer: "Неверный ответ"
+      answer: "Невірна відповідь"
     }
     if (amount === 0)
       this.addAnswer(questionId, answer1);
@@ -241,7 +241,7 @@ export class TestEditComponent implements OnInit {
   }
 
   deleteCurrentPage() {
-    if(confirm("Точно удалить текущий вопрос?")) {
+    if(confirm("Точно видалити поточне питання?")) {
       this.testService.deleteQuestion(this.questionsModel[this.currentQuestion - 1].questionId).subscribe(
         (response: void) => {
           this.currentQuestion--;
@@ -317,7 +317,7 @@ export class TestEditComponent implements OnInit {
   }
 
   deleteAnswer(answerId: any) {
-    if(confirm("Точно удалить этот ответ?")) {
+    if(confirm("Точно видалити цю відповідь?")) {
       this.testService.deleteAnswer(answerId).subscribe(
         (response: void) => {
           this.getTest();

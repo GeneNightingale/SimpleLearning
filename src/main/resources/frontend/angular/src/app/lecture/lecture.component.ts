@@ -42,8 +42,8 @@ export class LectureComponent implements OnInit {
   }
 
   public currentPageNum : number = 0;
-  public leftButtonText = "Назад к курсу";
-  public rightButtonText = "Вперёд";
+  public leftButtonText = "Назад до курсу";
+  public rightButtonText = "Далі";
 
   @ViewChild('courseTitle')
   courseTitle: ElementRef | undefined;
@@ -110,15 +110,15 @@ export class LectureComponent implements OnInit {
 
   public initializeButtons() {
     if (this.currentPageNum === 0) {
-      this.leftButtonText = "Назад к курсу"
+      this.leftButtonText = "Назад до курсу"
     } else {
       this.leftButtonText = "Назад"
     }
 
     if (this.currentPageNum + 1 == this.lecture.pages.length) {
-      this.rightButtonText = "Завершить лекцию"
+      this.rightButtonText = "Завершити лекцію"
     } else {
-      this.rightButtonText = "Вперёд"
+      this.rightButtonText = "Далі"
     }
   }
 

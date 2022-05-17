@@ -2,7 +2,7 @@
 
   <div class="course">
     <a class="course-title">{{course.title}}</a>
-    <a>Преподаёт: {{teacher.name}}</a>
+    <a>Викладає: {{teacher.name}}</a>
     <p>{{course.description}}</p>
   </div>
 
@@ -10,7 +10,7 @@
 
   <div class="course">
     <div class="section-container">
-      <a class="section-title">Веб-ресурсы</a>
+      <a class="section-title">Веб-ресурси</a>
     </div>
     <div class="materials">
       <div class="text" *ngFor="let material of course.materials">
@@ -21,7 +21,7 @@
     </div>
     <!--<div class="lectures">-->
     <div class="section-container">
-      <a class="section-title">Лекции</a>
+      <a class="section-title">Лекції</a>
     </div>
     <div class="materials">
       <div class="text" *ngFor="let lecture of course.lectures">
@@ -32,14 +32,14 @@
     </div>
     <!--<div class="tests">-->
     <div class="section-container">
-      <a class="section-title">Тесты</a>
+      <a class="section-title">Тести</a>
     </div>
     <div class="materials">
       <div class="text" *ngFor="let test of tests">
         <div class = "mat">
           <a class="material" [hidden]= "test.passed" (click)="openTest(test.testId)" [routerLink]="['/test/'+test.testId]">📄 {{test.title}}</a>
           <a class="material" [hidden]= "!test.passed" style="opacity: 80%">📄 {{test.title}}</a>
-          <a class="test-grade" [hidden]= "!test.passed" style="opacity: 80%">Пройдено - {{test.grade}}%</a>
+          <a class="test-grade" [hidden]= "!test.passed" style="opacity: 80%">Складено - {{test.grade}}%</a>
         </div>
       </div>
     </div>

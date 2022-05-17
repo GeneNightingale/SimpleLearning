@@ -4,19 +4,18 @@
   <div class="course" *ngFor="let course of courses">
     <div class="course-container">
       <a class="course-title" [routerLink]="['/course-teacher/'+course.courseId]">{{course.title}}</a>
-      <a class="course-title" [hidden]="course.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
-      <a class="course-button" title="Удалить" (click)="deleteCourse(course.courseId)">❌</a>
+      <a class="course-title" [hidden]="course.public" style="padding-left: 0.5em; filter: opacity(50%)">(Приховано)</a>
+      <a class="course-button" title="Видалити" (click)="deleteCourse(course.courseId)">❌</a>
       <a class="course-button">  </a>
-      <a class="course-button" title="Успеваемость" (click)="getCoursePerformance(course.courseId)">📑</a>
+      <a class="course-button" title="Успішність" (click)="getCoursePerformance(course.courseId)">📑</a>
       <a class="course-button">  </a>
-      <a class="course-button" title="Студенты" (click)="getCourseStudents(course.courseId)">👨‍🎓</a>
+      <a class="course-button" title="Студенти" (click)="getCourseStudents(course.courseId)">👨‍🎓</a>
       <a class="course-button">  </a>
-      <a class="course-button" title="Редактировать" (click)="editCourse(course.courseId)">📝</a>
+      <a class="course-button" title="Редагувати" (click)="editCourse(course.courseId)">📝</a>
       <a class="course-button">  </a>
-      <a class="course-button" title="Скрыть" [hidden]="!course.public" (click)="hideCourse(course.courseId)">👁</a>
-      <a class="course-button" title="Опубликовать" [hidden]="course.public" (click)="showCourse(course.courseId)">👁</a>
+      <a class="course-button" title="Приховати" [hidden]="!course.public" (click)="hideCourse(course.courseId)">👁</a>
+      <a class="course-button" title="Опублікувати" [hidden]="course.public" (click)="showCourse(course.courseId)">👁</a>
     </div>
-   <!-- <a>Преподаёт: {{teachers[courses.indexOf(course)].name}}</a>-->
      <p>{{course.description}}</p>
     <button class="button" [routerLink]="['/course-teacher/'+course.courseId]">Перейти</button>
   </div>
@@ -25,26 +24,26 @@
 
   <div class="add-course">
     <div class="course-form" [formGroup]="form">
-      <a class="add-course-label" >Добавить курс</a>
+      <a class="add-course-label">Додати курс</a>
       <br class="add-course-label">
       <input id="title" [(ngModel)]="course.title" formControlName="title" maxlength = "60" autocomplete="off"
              [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" placeholder="Название">
       <br>
       <div *ngIf="title?.errors?.['minlength'] && (title?.dirty || title?.touched)">
-        <div class = "hint">Используйте не менее 4 символов</div>
+        <div class = "hint">Використовуйте не менш ніж 4 символи</div>
       </div>
       <div *ngIf="title?.errors?.['required'] && (title?.dirty || title?.touched)">
-        <div class = "hint">Название курса не может быть пустым</div>
+        <div class = "hint">Назва курса не може бути пустою</div>
       </div>
       <br>
       <textarea id="description" [(ngModel)]="course.description" formControlName="description" maxlength = "4096" type="text"
-             [ngClass] = "{'input-bad': description?.errors && (description?.dirty || description?.touched)}" placeholder="Описание">
+             [ngClass] = "{'input-bad': description?.errors && (description?.dirty || description?.touched)}" placeholder="Опис">
       </textarea>
       <div *ngIf="!form.valid">
-        <button class="button" (click)="createCourse()" disabled>Создать курс</button>
+        <button class="button" (click)="createCourse()" disabled>Створити курс</button>
       </div>
       <div *ngIf="form.valid">
-        <button class="button" (click)="createCourse()">Создать курс</button>
+        <button class="button" (click)="createCourse()">Створити курс</button>
       </div>
       <br>
     </div>

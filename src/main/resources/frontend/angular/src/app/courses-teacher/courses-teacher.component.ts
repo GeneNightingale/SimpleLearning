@@ -64,7 +64,7 @@ export class CoursesTeacherComponent implements OnInit {
     this.courseService.getCourse(courseId).subscribe(
       (response: Course) => {
         courseToDelete = response;
-        if(courseToDelete != null && confirm("Точно удалить курс '"+ courseToDelete.title +"'?")) {
+        if(courseToDelete != null && confirm("Точно видалити курс '"+ courseToDelete.title +"'?")) {
           this.deleteCourseById(courseId);
         }
       },

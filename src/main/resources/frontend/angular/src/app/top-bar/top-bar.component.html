@@ -9,10 +9,10 @@
           <li class="top-bar"></li><li class="top-bar"></li>
         </ng-template>
         <ng-template [ngIf]="isTeacher">
-          <li class="top-bar"><a (click)="openHomePage()">Мои курсы</a></li>
+          <li class="top-bar"><a (click)="openHomePage()">Мої курси</a></li>
         </ng-template>
         <ng-template [ngIf]="isStudent">
-          <li class="top-bar"><a (click)="openStudentPerformance()">Моя успеваемость</a></li>
+          <li class="top-bar"><a (click)="openStudentPerformance()">Моя успішність</a></li>
         </ng-template>
 
         <!--Placeholder for a potential another button-->
@@ -32,7 +32,7 @@
         <li class="exit-bar"><a >🎓{{this.curUser}}</a></li>
       </ng-template>
       <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"><a (click)="logOut()" >Выйти</a></li>
+      <li class="exit-bar"><a (click)="logOut()" >Вийти</a></li>
     </ng-template>
     <!--Login/Logout button-->
     <ng-template #loggedOut>
@@ -43,7 +43,7 @@
       <li class="exit-bar"></li><li class="exit-bar"></li>
       <li class="exit-bar"></li><li class="exit-bar"></li>
       <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"><a (click)="openAuthorization()" >Вход</a></li>
+      <li class="exit-bar"><a (click)="openAuthorization()" >Вхід</a></li>
     </ng-template>
   </ul>
 </div>

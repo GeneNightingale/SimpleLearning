@@ -233,6 +233,7 @@ export class LectureEditComponent implements OnInit {
   savePage() {
     this.lectureService.updatePage(this.pagesModel[this.currentPage-1]).subscribe(
       (response: void) => {
+        this.uneditLecture();
         this.getLecture();
       },
       (error: HttpErrorResponse) => {

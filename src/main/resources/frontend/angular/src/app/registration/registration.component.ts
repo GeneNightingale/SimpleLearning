@@ -21,10 +21,10 @@ export class RegistrationComponent {
       nameRus: "Студент",
     }, {
       name: "TEACHER",
-      nameRus: "Учитель",
+      nameRus: "Вчитель",
     }, {
       name: "ADMIN",
-      nameRus: "Администратор",
+      nameRus: "Адміністратор",
     }
   ]; //List of roles to populate dropdown with
 
@@ -92,7 +92,7 @@ export class RegistrationComponent {
         err => {
           this.errorMessage = err.error.message;
           console.log(this.errorMessage);
-          this.appearanceService.customAlert("Не удалось зарегистрировать пользователя");
+          this.appearanceService.customAlert("Не вдалося зареєструвати користувача");
         }
       );
     }else {

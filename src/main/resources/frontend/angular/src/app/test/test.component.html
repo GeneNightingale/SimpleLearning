@@ -5,10 +5,10 @@
     <div class="login-form">
       <div class="test-container">
         <a class="test-title" >{{test.title}}</a>
-        <a class="test-time">Оставшееся время: {{counter | formatTime}}</a>
+        <a class="test-time">Залишилося часу: {{counter | formatTime}}</a>
       </div>
       <div class="part-of">
-        <a>Часть курса: </a>
+        <a>Частина курсу: </a>
         <a (click)="openCourse(test.courseId)" [routerLink]="['/course/'+test.courseId]"> {{courseTitle}}</a>
       </div>
     </div>
@@ -23,7 +23,7 @@
       </div>
       <div class="test-container">
         <!--<a class="current-page" style="float: left">Вопрос: </a>-->
-        <a class="question-num" style="float: left">Вопрос {{currentQuestion}} из {{test.questions.length}}</a>
+        <a class="question-num" style="float: left">Питання {{currentQuestion}} з {{test.questions.length}}</a>
         <select id="pages" class="form-control" (change)="pickedOption($event.target)" [(ngModel)]="currentQuestion">
           <option *ngFor="let question of questionsModel" [value]="question.questionNum">
             {{question.questionNum}}. {{question.text}}
@@ -35,7 +35,7 @@
       </div>
 
       <div class="answers-line">
-        <a class="answers-label">Ответы на вопрос:</a>
+        <a class="answers-label">Відповіді на питання:</a>
       </div>
 
       <form>

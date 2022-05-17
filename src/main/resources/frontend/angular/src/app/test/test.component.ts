@@ -67,8 +67,8 @@ export class TestComponent implements OnInit {
 
   public currentQuestion : any = 1;
 
-  public leftButtonText = "Левая кнопка";
-  public rightButtonText = "Правая кнопка";
+  public leftButtonText = "Ліва кнопка";
+  public rightButtonText = "Права кнопка";
 
   public questionsModel: QuestionModel[] = [
     {
@@ -160,7 +160,7 @@ export class TestComponent implements OnInit {
     if (this.currentQuestion < this.questionsModel.length)
       this.currentQuestion++;
     else
-      if (confirm("Закончить тест?"))
+      if (confirm("Закінчити тест?"))
         this.completeTest();
     this.initializeButtons();
   }
@@ -169,7 +169,7 @@ export class TestComponent implements OnInit {
     if (this.currentQuestion > 1)
       this.currentQuestion--;
     else
-      if (confirm("Закончить тест?"))
+      if (confirm("Закінчити тест?"))
         this.completeTest();
     this.initializeButtons();
   }
@@ -177,15 +177,15 @@ export class TestComponent implements OnInit {
   public initializeButtons() {
     console.log("Current question:" + this.currentQuestion + ", Length:" + this.questionsModel.length);
     if (this.currentQuestion < 2) {
-      this.leftButtonText = "Назад к курсу"
+      this.leftButtonText = "Назад до курсу"
     } else {
-      this.leftButtonText = "Предыдущий вопрос"
+      this.leftButtonText = "Наступне питання"
     }
 
     if (this.currentQuestion == this.questionsModel.length) {
-      this.rightButtonText = "Завершить тест"
+      this.rightButtonText = "Завершити тест"
     } else {
-      this.rightButtonText = "Следующий вопрос"
+      this.rightButtonText = "Наступне питання"
     }
   }
 
@@ -215,7 +215,7 @@ export class TestComponent implements OnInit {
   }
 
   openCourse(courseId: number) {
-    if (confirm("Закончить тест?"))
+    if (confirm("Закінчити тест?"))
       this.completeTest();
   }
 

@@ -25,19 +25,19 @@
   <div class="test-content">
     <div class="test-container">
       <div class="test-container">
-        <a class="current-page" style="float: left">Время на выполнение: </a>
-        <input id="time" class="form-control" type="number" min="1" max="10080" step="1" [value]="testModel.time" style="width: 15%">
+        <a class="current-page" style="float: left">Час на виконання, хвилин: </a>
+        <input id="time" class="form-control" type="number" min="1" max="10080" step="1" [value]="testModel.time" style="width: 13.3%">
       </div>
       <div class="test-container">
-      <a class="current-page" style="float: left">Вопрос: </a>
+      <a class="current-page" style="float: left">Питання: </a>
       <select id="pages" class="form-control" (ngModelChange)="pickedOption($event.target)" [(ngModel)]="currentQuestion">
         <option *ngFor="let question of questionsModel" [value]="question.questionNum">
           {{question.questionNum}}. {{question.text}}
         </option>
       </select>
       <a class="course-button" [hidden]= "questionsModel.length <2" title="Удалить" (click)="deleteCurrentPage()">❌</a>
-      <a class="course-button" title="Добавить" (click)="addQuestion()">➕</a>
-      <a class="course-button" title="Сохранить" (click)="saveQuestion()">✔</a>
+      <a class="course-button" title="Додати" (click)="addQuestion()">➕</a>
+      <a class="course-button" title="Зберегти" (click)="saveQuestion()">✔</a>
       <textarea id="description" [(ngModel)]="questionsModel[currentQuestion-1].text" maxlength = "2048" type="text"
                 #textarea [scrollTop]="1 -textarea.scrollHeight"></textarea>
       </div>
@@ -50,20 +50,20 @@
 
       <div class="add-answer">
         <div class="course-form" [hidden]="!isInAddAnswerMode" [formGroup]="formAnswer">
-          <a class="add-course-label" >Добавить вариант ответа</a>
+          <a class="add-course-label" >Додати варіант відповіді</a>
           <br class="add-course-label">
           <input class="add-answer-input" id="answer" [(ngModel)]="answerModel.answer" formControlName="answer" maxlength = "120" autocomplete="off"
-                 [ngClass] = "{'input-bad': answer?.errors && (answer?.dirty || answer?.touched)}" placeholder="Вариант ответа">
+                 [ngClass] = "{'input-bad': answer?.errors && (answer?.dirty || answer?.touched)}" placeholder="Варіант відповіді">
           <br>
           <div *ngIf="answer?.errors?.['required'] && (answer?.dirty || answer?.touched)">
-            <div class = "hint">Вариант ответа не может быть пустым</div>
+            <div class = "hint">Варіант відповіді не може бути пустим</div>
           </div>
           <br>
           <div *ngIf="!formAnswer.valid">
-            <button class="button" (click)="addAnswerToQuestion()" disabled>Добавить вариант ответа</button>
+            <button class="button" (click)="addAnswerToQuestion()" disabled>Додати варіант відповіді</button>
           </div>
           <div *ngIf="formAnswer.valid">
-            <button class="button" (click)="addAnswerToQuestion()">Добавить вариант ответа</button>
+            <button class="button" (click)="addAnswerToQuestion()">Додати варіант відповіді</button>
           </div>
           <br>
         </div>
@@ -75,12 +75,12 @@
           <label class="radio-label" for="{{answer.answerId}}">{{answer.answer}}</label>
           <a class="course-button" title="Удалить" (click)="deleteAnswer(answer.answerId)">❌</a>
         </div>
-        <p class="answers-label">Верный ответ: {{questionsModel[currentQuestion-1].answer}}</p>
       </form>
+      <p class="answers-label">Вірна відповідь: {{questionsModel[currentQuestion-1].answer}}</p>
 
       <div class="page-buttons">
-        <button name="submit" [disabled]= "currentQuestion === questionsModel.length" class="action_btn" type="submit" (click)="nextQuestion()">Следующий вопрос</button>
-        <button name="submit" [disabled]= "currentQuestion <2" class="action_btn" type="submit" (click)="prevQuestion()">Предыдущий вопрос</button>
+        <button name="submit" [disabled]= "currentQuestion === questionsModel.length" class="action_btn" type="submit" (click)="nextQuestion()">Попереднє питання</button>
+        <button name="submit" [disabled]= "currentQuestion <2" class="action_btn" type="submit" (click)="prevQuestion()">Наступне питання</button>
       </div>
     </div>
   </div>

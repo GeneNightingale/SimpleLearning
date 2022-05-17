@@ -89,7 +89,7 @@ export class CourseComponent implements OnInit {
   }
 
   openTest(testId: any) {
-    if(confirm("Начать этот тест? Закончив тест, его можно будет пройти заново только получив разрешение от преподавателя.")) {
+    if(confirm("Почати цей тест? Закінчивши тест, його можна буде скласти заново, лише отримавши дозвіл від викладача.")) {
       this.router.navigate(['/test/' + testId]);
     }
   }

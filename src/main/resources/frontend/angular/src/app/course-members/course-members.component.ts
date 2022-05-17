@@ -96,7 +96,7 @@ export class CourseMembersComponent implements OnInit {
   }
 
   addToCourse(studentId: any) {
-    if(confirm("Точно дать этому студенту доступ к курсу?")) {
+    if(confirm("Точно дати цьому студенту доступ до курсу?")) {
       this.studentMembershipService.addMemberToCourse(this.course.courseId, studentId).subscribe(
         data => {
           this.reloadPage();
@@ -109,7 +109,7 @@ export class CourseMembersComponent implements OnInit {
   }
 
   removeFromCourse(studentId: any) {
-    if(confirm("Точно снять этого студента с курса? Это также сотрёт всю его успеваемость по этому курсу!")) {
+    if(confirm("Точно зняти цього студента з курсу? Це також зітре всю його успішність за цим курсом!")) {
       this.studentMembershipService.removeMemberFromCourse(this.course.courseId, studentId).subscribe(
         data => {
           this.reloadPage();

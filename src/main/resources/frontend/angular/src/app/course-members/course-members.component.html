@@ -5,24 +5,22 @@
 
     <!--In here list all member students-->
 
-    <a class="member-title">Изучают предмет:</a>
+    <a class="member-title">Вивчають предмет:</a>
 
     <div class="student" *ngFor="let student of memberStudents">
       <a class="student-name">🎓 {{student.name}}</a>
-      <a class="student-button" title="Убрать из курса" (click)="removeFromCourse(student.userId)">➖</a>
+      <a class="student-button" title="Видалити з курсу" (click)="removeFromCourse(student.userId)">➖</a>
       <a class="student-button">  </a>
-      <a class="student-button" title="Успеваемость" (click)="openReportOnStudent(student.userId)">📝</a>
+      <a class="student-button" title="Успішність" (click)="openReportOnStudent(student.userId)">📝</a>
     </div>
 
     <!--In here all non-member students-->
 
-    <a class="member-title">Не изучают предмет:</a>
+    <a class="member-title">Не вивчають предмет:</a>
 
     <div class="student" *ngFor="let student of notMemberStudents">
       <a class="student-name">🎓 {{student.name}}</a>
-      <a class="student-button" title="Добавить в курс" (click)="addToCourse(student.userId)">➕</a>
-      <!--<a class="student-button">  </a>
-      <a class="student-button" title="Успеваемость" (click)="openReportOnStudent(student.studentId)">📝</a>-->
+      <a class="student-button" title="Додати до курсу" (click)="addToCourse(student.userId)">➕</a>
     </div>
 
 

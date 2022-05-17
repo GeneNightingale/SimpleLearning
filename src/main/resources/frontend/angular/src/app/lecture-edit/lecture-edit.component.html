@@ -7,14 +7,14 @@
       <input id="title" [hidden]="!isInEditMode" [(ngModel)]="lectureModel.title" formControlName="title" maxlength = "60" autocomplete="off"
              [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" [value]="lecture.title">
       <a class="lecture-title" [hidden]="isInEditMode">{{lecture.title}}</a>
-      <a class="lecture-title" [hidden]="isInEditMode || lecture.public" style="padding-left: 0.5em; filter: opacity(50%)">(Скрыт)</a>
+      <a class="lecture-title" [hidden]="isInEditMode || lecture.public" style="padding-left: 0.5em; filter: opacity(50%)">(Приховано)</a>
       <a class="lecture-button" [hidden]="isInEditMode">  </a>
-      <a class="lecture-button" title="Отменить" [hidden]="!isInEditMode" (click)="uneditLecture()">🚫</a>
+      <a class="lecture-button" title="Скасувати" [hidden]="!isInEditMode" (click)="uneditLecture()">🚫</a>
       <a class="lecture-button" [hidden]="!isInEditMode">  </a>
-      <a class="lecture-button" title="Сохранить" [hidden]="!isInEditMode" (click)="submitLecture()">✔</a>
-      <a class="lecture-button" title="Редактировать" [hidden]="isInEditMode" (click)="editLecture()">📝</a>
+      <a class="lecture-button" title="Зберегти" [hidden]="!isInEditMode" (click)="submitLecture()">✔</a>
+      <a class="lecture-button" title="Редагувати" [hidden]="isInEditMode" (click)="editLecture()">📝</a>
     </div>
-    <a>Часть курса: </a>
+    <a>Частина курсу: </a>
     <a [routerLink]="['/course-teacher/'+lecture.courseId]"> {{courseTitle}}</a>
 
     </div>
@@ -24,21 +24,21 @@
 
   <div class="lecture-content">
     <div class="lecture-container">
-      <a class="current-page" style="float: left">Страница: </a>
+      <a class="current-page" style="float: left">Сторінка: </a>
       <select id="pages" class="form-control" (ngModelChange)="pickedOption($event.target)" [(ngModel)]="currentPage">
         <option *ngFor="let pageModel of pagesModel" [value]="pageModel.pageNum">
           {{pageModel.pageNum}}
         </option>
       </select>
-      <a class="course-button" [hidden]= "pagesModel.length <2" title="Удалить" (click)="deleteCurrentPage()">❌</a>
-      <a class="course-button" title="Добавить" (click)="addPage()">➕</a>
-      <a class="course-button" title="Сохранить" (click)="savePage()">✔</a>
+      <a class="course-button" [hidden]= "pagesModel.length <2" title="Видалити" (click)="deleteCurrentPage()">❌</a>
+      <a class="course-button" title="Додати" (click)="addPage()">➕</a>
+      <a class="course-button" title="Зберегти" (click)="savePage()">✔</a>
       <textarea id="description" [(ngModel)]="pagesModel[currentPage-1].text" maxlength = "32767" type="text"
                 #textarea [scrollTop]="1 -textarea.scrollHeight"></textarea>
     </div>
     <div class="page-buttons">
-      <button name="submit" [disabled]= "currentPage <2" class="action_btn" type="submit" (click)="prevPage()">Предыдущая страница</button>
-      <button name="submit" [disabled]= "currentPage === pagesModel.length" class="action_btn" type="submit" (click)="nextPage()">Следующая страница</button>
+      <button name="submit" [disabled]= "currentPage <2" class="action_btn" type="submit" (click)="prevPage()">Попередня сторінка</button>
+      <button name="submit" [disabled]= "currentPage === pagesModel.length" class="action_btn" type="submit" (click)="nextPage()">Наступна сторінка</button>
     </div>
   </div>
 </div>
