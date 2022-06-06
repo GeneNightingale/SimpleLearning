@@ -27,7 +27,7 @@
       <a class="add-course-label">Додати курс</a>
       <br class="add-course-label">
       <input id="title" [(ngModel)]="course.title" formControlName="title" maxlength = "60" autocomplete="off"
-             [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" placeholder="Название">
+             [ngClass] = "{'input-bad': title?.errors && (title?.dirty || title?.touched)}" placeholder="Назва">
       <br>
       <div *ngIf="title?.errors?.['minlength'] && (title?.dirty || title?.touched)">
         <div class = "hint">Використовуйте не менш ніж 4 символи</div>

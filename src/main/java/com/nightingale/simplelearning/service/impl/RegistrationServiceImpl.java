@@ -22,7 +22,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     @Transactional
     public void register(RequestUser user) {
-        System.out.println(user.getName() + " " + user.getLogin() + " " + user.getPassword() + " " + user.getRole());
         if (!userService.save(user)) {
             throw new IllegalStateException("Something went wrong when registering a new user");
         }

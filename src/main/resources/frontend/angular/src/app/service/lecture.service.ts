@@ -43,8 +43,8 @@ export class LectureService {
     return this.http.put<void>(`${this.apiServerUrl}/lecture/${lectureId}`, lectureModel);
   }
 
-  public addEmptyPage(pageId: number, page: Page): Observable<void> {
-    return this.http.post<void>(`${this.apiServerUrl}/page/by_lecture/${pageId}`, page);
+  public addEmptyPage(lectureId: number, page: Page): Observable<void> {
+    return this.http.post<void>(`${this.apiServerUrl}/page/by_lecture/${lectureId}`, page);
   }
 
   public updatePage(page: Page): Observable<void> {

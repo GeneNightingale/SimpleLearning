@@ -13,6 +13,7 @@ import {StudentMembershipService} from "../service/student-membership";
 import {TestService} from "../service/test.service";
 import {TestResults} from "../entities/testResults";
 import {Result} from "../entities/result";
+import {User} from "../entities/user";
 
 @Component({
   selector: 'app-student-performance',
@@ -24,6 +25,7 @@ export class StudentPerformanceComponent implements OnInit {
   public courses: Course[] = [];
 
   public studentId: number = 0;
+  public studentName: string = 'default';
 
   private subscription: Subscription;
 
@@ -45,19 +47,29 @@ export class StudentPerformanceComponent implements OnInit {
   public courseResults: TestResults[] = [];
 
   public getCourses(): void {
-    this.coursesService.getMyCourses().subscribe(
-      (response: Course[]) => {
-        this.courses = response;
-        this.getResults();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+    if (this.isStudent)
+      this.coursesService.getMyCourses().subscribe(
+        (response: Course[]) => {
+          this.courses = response;
+          this.getResults();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    else
+      this.coursesService.getCoursesByStudent(this.studentId).subscribe(
+        (response: Course[]) => {
+          this.courses = response;
+          this.getResults();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
   }
 
   public getResults(): void {
-
     let countCourses = 0;
     this.courses.forEach(course => {
       this.testService.getMyResultsByCourseId(course.courseId, this.studentId).subscribe(
@@ -77,7 +89,7 @@ export class StudentPerformanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    //this.getCourses();
     this.initializeUser();
   }
 
@@ -85,6 +97,20 @@ export class StudentPerformanceComponent implements OnInit {
     if (this.isLoggedIn) {
       this.dataSharingService.curUser.next(this.getCurrentUser());
       this.isStudent = this.tokenStorage.getUser().role == "STUDENT";
+    }
+    this.getCourses();
+    if (this.isStudent) {
+      this.studentId = this.tokenStorage.getUser().userId;
+      this.studentName = this.getCurrentUser();
+    } else {
+      this.userService.getUserById(this.studentId).subscribe(
+        (response: User) => {
+          this.studentName = response.name!;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
     }
   }
 

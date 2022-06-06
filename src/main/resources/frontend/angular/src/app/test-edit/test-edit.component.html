@@ -43,9 +43,9 @@
       </div>
 
       <div class="answers-line">
-          <a class="answers-label">Ответы на вопрос:</a>
-          <a class="course-button" title="Добавить ответ" [hidden]="isInAddAnswerMode" (click)="addAnswerMode()">➕</a>
-          <a class="course-button" title="Добавить ответ" [hidden]="!isInAddAnswerMode" (click)="unaddAnswerMode()">🚫</a>
+          <a class="answers-label">Варіанти відповідей:</a>
+          <a class="course-button" title="Додати варіант відповіді" [hidden]="isInAddAnswerMode" (click)="addAnswerMode()">➕</a>
+          <a class="course-button" title="Додати варіант відповіді" [hidden]="!isInAddAnswerMode" (click)="unaddAnswerMode()">🚫</a>
         </div>
 
       <div class="add-answer">
@@ -79,8 +79,8 @@
       <p class="answers-label">Вірна відповідь: {{questionsModel[currentQuestion-1].answer}}</p>
 
       <div class="page-buttons">
-        <button name="submit" [disabled]= "currentQuestion === questionsModel.length" class="action_btn" type="submit" (click)="nextQuestion()">Попереднє питання</button>
-        <button name="submit" [disabled]= "currentQuestion <2" class="action_btn" type="submit" (click)="prevQuestion()">Наступне питання</button>
+        <button name="submit" [disabled]= "currentQuestion === questionsModel.length" class="action_btn" type="submit" (click)="nextQuestion()">Наступне питання</button>
+        <button name="submit" [disabled]= "currentQuestion <2" class="action_btn" type="submit" (click)="prevQuestion()">Попереднє питання</button>
       </div>
     </div>
   </div>

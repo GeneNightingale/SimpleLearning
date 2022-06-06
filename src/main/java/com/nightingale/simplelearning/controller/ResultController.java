@@ -43,14 +43,6 @@ public class ResultController {
         return resultService.getAllResultsByStudentId(studentId);
     }
 
-    @PostMapping("/by_student_and_test")
-    public Result getResultByStudentAndTest(@Valid @RequestBody Result result) {
-        return resultService.getAllResultsByStudentAndTestId(
-                BigInteger.valueOf(result.getStudentId()),
-                BigInteger.valueOf(result.getTestId())
-        );
-    }
-
     //
     //Mostly useless stuff down below
     //

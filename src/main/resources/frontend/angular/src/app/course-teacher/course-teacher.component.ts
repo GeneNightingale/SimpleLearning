@@ -146,7 +146,9 @@ export class CourseTeacherComponent implements OnInit {
 
   submitCourse(courseId: number) {
     const courseTitle = (<HTMLInputElement>document.getElementById('title'));
+    const courseDesc = (<HTMLInputElement>document.getElementById('description'));
     this.courseModel.title = courseTitle.value;
+    this.courseModel.description = courseDesc.value;
     this.coursesService.updateCourse(this.course.courseId, this.courseModel).subscribe(
       (response: void) => {
         this.reloadPage();
@@ -183,7 +185,7 @@ export class CourseTeacherComponent implements OnInit {
 
   /*Material controls*/
   deleteMaterial(materialId: any) {
-    if(confirm("Точно удалить веб-ресурс?")) {
+    if(confirm("Точно видалити веб-ресурс?")) {
       this.materialsService.deleteMaterial(materialId).subscribe(
         (response: void) => {
           this.reloadPage();
@@ -239,7 +241,7 @@ export class CourseTeacherComponent implements OnInit {
 
   /*Lecture controls*/
   deleteLecture(lectureId: any) {
-    if(confirm("Точно удалить лекцию?")) {
+    if(confirm("Точно видалити лекцiю?")) {
       this.lectureService.deleteLecture(lectureId).subscribe(
         (response: void) => {
           this.reloadPage();
@@ -299,7 +301,7 @@ export class CourseTeacherComponent implements OnInit {
 
   /*Test Controls*/
   deleteTest(testId: any) {
-    if(confirm("Точно удалить тест?")) {
+    if(confirm("Точно видалити тест?")) {
       this.testService.deleteTest(testId).subscribe(
         (response: void) => {
           this.reloadPage();

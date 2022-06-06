@@ -70,7 +70,7 @@ public interface CourseDAO {
             "WHERE courseId = ? AND studentId = ?";
 
     String REMOVE_COURSE_MEMBERS_RESULTS = "DELETE FROM result " +
-            "WHERE userId = ?";
+            "WHERE userId = ? AND courseId = ?";
 
     String INSERT_COURSE= "INSERT INTO COURSE (title, teacherId, description) " +
             "VALUES (?, ?, ?)";

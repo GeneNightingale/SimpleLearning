@@ -25,7 +25,7 @@
       <div class = "hint">Неправильне ім'я користувача або пароль</div>
     </div>
     <div *ngIf="!form.valid">
-        <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled>Увійти</button>
+        <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled title="Введіть коректні дані">Увійти</button>
     </div>
     <div *ngIf="form.valid">
         <button id="authorize" type="button" (click)="onSubmit()">Увійти</button>

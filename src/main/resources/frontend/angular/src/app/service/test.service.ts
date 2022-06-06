@@ -82,10 +82,6 @@ export class TestService {
     return this.http.post<void>(`${this.apiServerUrl}/test/complete_test/${testResultModel.testId}`, testResultModel);
   }
 
-  public getResultByUserAndTest(userId : number, testId: number): Observable<Result> {
-    return this.http.post<Result>(`${this.apiServerUrl}/result/by_student_and_test`, {studentId: userId, testId: testId});
-  }
-
   public getResultsByTestId(testId: number): Observable<Result[]> {
     return this.http.get<Result[]>(`${this.apiServerUrl}/result/by_test/${testId}`);
   }

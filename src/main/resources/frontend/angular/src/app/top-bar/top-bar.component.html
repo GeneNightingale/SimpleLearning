@@ -5,8 +5,8 @@
     <!--Navigation buttons-->
       <div class="centred-part">
 
-        <ng-template [ngIf]="isAdmin">
-          <li class="top-bar"></li><li class="top-bar"></li>
+        <ng-template [ngIf]="isAdmin || !isLoggedIn">
+          <li class="top-bar"></li>
         </ng-template>
         <ng-template [ngIf]="isTeacher">
           <li class="top-bar"><a (click)="openHomePage()">Мої курси</a></li>
@@ -23,26 +23,20 @@
     <!--Shows username and role icon on top bar-->
     <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
       <ng-template [ngIf]="isAdmin">
-        <li class="exit-bar"><a >🔧{{this.curUser}}</a></li>
+        <li class="name"><a >🔧{{this.curUser}}</a></li>
       </ng-template>
       <ng-template [ngIf]="isTeacher">
-        <li class="exit-bar"><a >👓{{this.curUser}}</a></li>
+        <li class="name"><a >👓{{this.curUser}}</a></li>
       </ng-template>
       <ng-template [ngIf]="isStudent">
-        <li class="exit-bar"><a >🎓{{this.curUser}}</a></li>
+        <li class="name"><a >🎓{{this.curUser}}</a></li>
       </ng-template>
       <li class="exit-bar"></li><li class="exit-bar"></li>
       <li class="exit-bar"><a (click)="logOut()" >Вийти</a></li>
     </ng-template>
     <!--Login/Logout button-->
     <ng-template #loggedOut>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
-      <li class="exit-bar"></li><li class="exit-bar"></li>
+      <li class="name"> </li><li class="name"> </li>
       <li class="exit-bar"><a (click)="openAuthorization()" >Вхід</a></li>
     </ng-template>
   </ul>

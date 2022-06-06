@@ -104,7 +104,7 @@ button :disabled {
 }
 
 input {
-  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border: 0.1em solid rgba(255, 172, 172, 0.0);
   border-radius: 0.2em;
   padding-left: 0.3em;
   width: 80%;
@@ -121,7 +121,7 @@ input {
 }
 
 textarea {
-  border: 0.1em solid rgba(255, 172, 172, 0.0);;
+  border-color: lightgrey;
   border-radius: 0.2em;
   padding: 0.2em 0.3em;
   width: 100%;

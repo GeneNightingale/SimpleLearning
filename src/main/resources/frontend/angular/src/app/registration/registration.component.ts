@@ -87,7 +87,9 @@ export class RegistrationComponent {
     if (this.form.valid) {
       this.authService.register(this.user).subscribe(
         data => {
+          this.appearanceService.customAlert("Користувача успішно зареєстровано");
           console.log(data);
+          this.form.reset();
         },
         err => {
           this.errorMessage = err.error.message;

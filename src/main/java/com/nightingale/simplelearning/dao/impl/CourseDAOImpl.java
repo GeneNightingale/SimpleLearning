@@ -218,7 +218,7 @@ public class CourseDAOImpl implements CourseDAO{
     public boolean removeCourseMember(BigInteger courseId, BigInteger studentId) {
         try {
             jdbcTemplate.update(REMOVE_COURSE_MEMBER, courseId, studentId);
-            jdbcTemplate.update(REMOVE_COURSE_MEMBERS_RESULTS, studentId);
+            jdbcTemplate.update(REMOVE_COURSE_MEMBERS_RESULTS, studentId, courseId);
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

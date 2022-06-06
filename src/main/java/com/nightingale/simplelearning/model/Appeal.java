@@ -4,6 +4,7 @@ import com.nightingale.simplelearning.model.enums.Status;
 
 import java.util.Objects;
 
+@Deprecated
 public class Appeal {
 
     private long appealId;

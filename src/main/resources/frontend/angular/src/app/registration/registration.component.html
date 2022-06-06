@@ -4,7 +4,7 @@
       <div class="label" id="signup">Реєстрація</div>
       <input [(ngModel)]="user.name" formControlName="name" type="text" class="input" placeholder="Им'я користувача" required/>
       <div *ngIf="name?.invalid && name?.touched">
-        <div class = "hint">И'мя користувача повинно містити не менш ніж 4 символів</div>
+        <div class = "hint">І'мя користувача повинно містити не менш ніж 4 символів</div>
       </div>
       <input [(ngModel)]="user.login" formControlName="login" type="text" class="input" placeholder="Логін" required/>
       <div *ngIf="login?.invalid && login?.touched">

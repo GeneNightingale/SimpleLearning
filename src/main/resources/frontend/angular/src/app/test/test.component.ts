@@ -179,7 +179,7 @@ export class TestComponent implements OnInit {
     if (this.currentQuestion < 2) {
       this.leftButtonText = "Назад до курсу"
     } else {
-      this.leftButtonText = "Наступне питання"
+      this.leftButtonText = "Попереднє питання"
     }
 
     if (this.currentQuestion == this.questionsModel.length) {
