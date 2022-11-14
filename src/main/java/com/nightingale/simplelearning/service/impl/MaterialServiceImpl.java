@@ -20,7 +20,6 @@ public class MaterialServiceImpl implements MaterialService {
         return materialDAO.getMaterialById(id);
     }
 
-    //TODO: FILTER OUT HIDDEN ONES? I THINK I FORGOR 💀
     @Override
     public List<Material> getAllMaterialsByCourseId(BigInteger courseId) {
         return materialDAO.getAllMaterialsByCourseId(courseId);
